@@ -1,0 +1,40 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+
+    {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
+
+    <section class="gui-box">
+        <h2>Applications</h2>
+        <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="serviceplanner">
+                    <span class="material-icons">train</span>
+                    <p>Service Planner</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">dvr</span>
+                    <p>Destination boards</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">local_printshop</span>
+                    <p>Ticket sell</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    {% include "common/footing.twig" %}
+</div>
+<p class="gui-picture-author">Deutsche Bahn AG & archi_tektur &copy; 2018</p>
+
+
+{% include "common/footer.twig" %}

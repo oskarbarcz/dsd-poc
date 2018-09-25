@@ -1,0 +1,43 @@
+{% include "common/header.twig" %}
+<div class="gui-container">
+    <header class="gui-box title-box">
+        <img class="logo" src="img/logos/db-logo.png" alt="Deutsche Bahn logo">
+        <h1 class="title">Netze</h1>
+    </header>
+    <section class="gui-box">
+        <h2>Log in</h2>
+        <p>Log into your personal staff account</p>
+        <form class="gui-form" action="login">
+            <label for="loginField">Login</label>
+            <input placeholder="login" type="text" name="login" id="loginField">
+            <label for="passwordField">Password</label>
+            <input placeholder="password" type="password" name="password" id="passwordField">
+            <div class="rememberme">
+                <input type="checkbox" name="remember" id="rememberMeField">
+                <label for="rememberMeField">Remember me</label>
+            </div>
+            <input class="submit" type="submit" value="log in">
+        </form>
+    </section>
+    <section class="gui-box gui-warning">
+        <p>Typical error message</p>
+    </section>
+    <section class="gui-box gui-success">
+        <p>Typical success message</p>
+    </section>
+    <footer class="gui-box footer-box">
+        <div class="icon-container">
+            <span class="icon">#</span>
+            <span class="icon">#</span>
+            <span class="icon">#</span>
+            <span class="icon">#</span>
+            <span class="icon">#</span>
+            <span class="icon">#</span>
+        </div>
+        <p><span class="bold">Digitale Schiene</span> Deutschland</p>
+    </footer>
+
+</div>
+<p class="gui-picture-author">Deutsche Bahn AG & archi_tektur &copy; 2018</p>
+
+{% include "common/footer.twig" %}

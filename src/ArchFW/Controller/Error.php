@@ -101,7 +101,11 @@ class Error implements IError
     protected function _jsonError(): void
     {
         header('Content-Type: application/json');
-        exit(json_encode(['error' => true, 'errorCode' => $this->_code, 'errorMessage' => $this->_message,]));
+        exit(json_encode([
+            'error'        => true,
+            'errorCode'    => $this->_code,
+            'errorMessage' => $this->_message,
+        ]));
     }
 
     /**
@@ -113,7 +117,7 @@ class Error implements IError
      */
     protected function _plainError(bool $force /* FORCE */): void
     {
-        if (!CONFIG['dev'] or !$force) {
+        if (CONFIG['production'] or !$force) {
             $this->_htmlError();
         } else {
             header('Content-Type: text/plain');

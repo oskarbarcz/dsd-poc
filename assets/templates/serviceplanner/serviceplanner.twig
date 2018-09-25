@@ -1,0 +1,56 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+
+    {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
+
+    <section class="gui-box">
+        <h2>Service Planner</h2>
+        <p>Service Planner is used to run and manage every move in DB. Here are registered all maneuvers, drives and
+            warns.</p>
+        <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="startslot">
+                    <span class="material-icons">play_arrow</span>
+                    <p>Start slot</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="requestslot">
+                    <span class="material-icons">add_circle_outline</span>
+                    <p>Request slot</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="newslot">
+                    <span class="material-icons">add_circle</span>
+                    <p>Add new slot</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="manageslots">
+                    <span class="material-icons">playlist_add_check</span>
+                    <p>Slots management</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard last" href="panel">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p>Back to applications</p>
+                    <span class="material-icons">apps</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    {% include "common/footing.twig" %}
+</div>
+
+
+
+{% include "common/footer.twig" %}

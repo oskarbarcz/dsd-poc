@@ -21,10 +21,10 @@ return [
     # If you want to add your own setting, place it carefully below this settings, match the key so you won't override actual settings. You can reach this config as defined CONFIG constant in every scope.
 
     # Production server switch. When set to false, all PHP errors will be hidden, written to logs. When set to true, all PHP erros will occur, helping debug the application.
-    'production'  => true,
+    'production'       => false,
 
     # This settings will set the security details of your app. Keep it untouched, it's field for application programmer.
-    'security'    => [
+    'security'         => [
         # Force users to access page via HTTP Secure protocol
         'https' => false,
 
@@ -33,11 +33,11 @@ return [
     ],
 
     # Every page has
-    'metaConfig'  => [
-        'pageTitle'       => 'ArchFW installed!',
+    'metaConfig'       => [
+        'pageTitle'       => 'DB Netz Application',
         'pageEncoding'    => 'UTF-8'
         /* NOT NULL*/,
-        'pageLanguage'    => "pl"
+        'pageLanguage'    => "en"
         /* NOT NULL*/,
         'pageDescription' => '',
         'pageKeywords'    => '',
@@ -56,7 +56,7 @@ return [
         'link' => '/css/style-desktop.css',
     ],
     */
-    'stylesheets' => [
+    'stylesheets'      => [
         "Example" => [
             'name' => 'example stylesheet',
             'type' => 'text/css',
@@ -67,9 +67,9 @@ return [
     ],
 
     # Here enter database details, if you want to use our extention.
-    'DBConfig'    => [
+    'DBConfig'         => [
         'databaseType' => 'mysql',
-        'databaseName' => 'test',
+        'databaseName' => 'dbls',
         'server'       => 'localhost',
         'user'         => 'root',
         'password'     => '',
@@ -87,8 +87,11 @@ return [
 
     # Add adresses to our router. Key here is a URL adress user enters, and value is name of wrapper and twig files. When file is in subdirectory, you can use '/', e.g. 'login/recoverpassword'.
     'appRouter'        => [
-        '/'     => 'index',
-        '/test' => 'test',
+        '/'               => 'index',
+        '/login'          => 'login/login',
+        '/panel'          => 'panel',
+        '/serviceplanner' => 'serviceplanner/serviceplanner',
+        '/maintenance'    => 'maintenance/panel',
     ],
 
     # Path to catalogue with errorcodes, files inside should be named like an errors they are written for - e.g. '404.html'. PHP is not allowed in this files. Until you modify framework internal structure (not recommended!), no need to touch this.

@@ -106,7 +106,7 @@ final class Router
             echo json_encode($json);
             exit;
         } else if (!array_key_exists('/' . $explodedURI[0], CONFIG['appRouter'])) {
-            if (CONFIG['dev']) {
+            if (!CONFIG['production']) {
                 new Error(404, "Router did not found route '/{$explodedURI[0]}' in APP config file!", Error::PLAIN);
             }
             new Error(404, "Not Found", Error::HTML);
