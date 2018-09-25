@@ -91,6 +91,8 @@ return [
         '/login'          => 'login/login',
         '/panel'          => 'panel',
         '/serviceplanner' => 'serviceplanner/serviceplanner',
+        '/startslot'      => 'serviceplanner/startslot',
+        '/addslot'        => 'serviceplanner/addslot',
         '/maintenance'    => 'maintenance/panel',
     ],
 

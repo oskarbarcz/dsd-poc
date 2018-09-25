@@ -1,9 +1,6 @@
 {% include "common/header.twig" %}
 <div class="gui-container">
-    <header class="gui-box title-box">
-        <img class="logo" src="img/logos/db-logo.png" alt="Deutsche Bahn logo">
-        <h1 class="title">Netze</h1>
-    </header>
+    {% include "common/heading.twig" %}
     <section class="gui-box">
         <h2>Log in</h2>
         <p>Log into your personal staff account</p>
@@ -25,17 +22,7 @@
     <section class="gui-box gui-success">
         <p>Typical success message</p>
     </section>
-    <footer class="gui-box footer-box">
-        <div class="icon-container">
-            <span class="icon">#</span>
-            <span class="icon">#</span>
-            <span class="icon">#</span>
-            <span class="icon">#</span>
-            <span class="icon">#</span>
-            <span class="icon">#</span>
-        </div>
-        <p><span class="bold">Digitale Schiene</span> Deutschland</p>
-    </footer>
+    {% include "common/footing.twig" %}
 
 </div>
 <p class="gui-picture-author">Deutsche Bahn AG & archi_tektur &copy; 2018</p>

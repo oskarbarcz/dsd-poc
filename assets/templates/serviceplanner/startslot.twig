@@ -1,0 +1,39 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+
+    {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
+    <section class="gui-box">
+        <h2>Start slot</h2>
+        <p>Starts driving panel. Enter below train linear ID or refID (Reference ID on Agreement from DB
+            Trafficzentrum). A soon as You will click the start button, application will start ride session. Enter your
+            slot only before the ride.</p>
+        <form class="gui-form" action="startslot">
+            <div class="gui-form-element">
+                <input type="text" placeholder="trainID" name="trainID" id="trainID">
+                <input type="text" placeholder="refID" name="docID" id="docID">
+            </div>
+            <input class="submit" type="submit" value="start">
+        </form>
+        <div class="gui-box-menu">
+            <a class="gui-menu-flatcard" href="requestslot">
+                <span class="material-icons">add_circle_outline</span>
+                <p>Request slot</p>
+                <span class="material-icons">keyboard_arrow_right</span>
+            </a>
+            <a class="gui-menu-flatcard" href="">
+                <span class="material-icons">keyboard_arrow_left</span>
+                <p>Back to Service Planner</p>
+                <span class="material-icons">apps</span>
+            </a>
+        </div>
+    </section>
+    <section class="gui-box gui-warning">
+        <p>Typical error message</p>
+    </section>
+    {% include "common/footing.twig" %}
+
+</div>
+
+{% include "common/footer.twig" %}

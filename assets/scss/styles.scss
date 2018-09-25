@@ -256,6 +256,7 @@ body {
                 transition: 0.2s ease-in-out all;
                 &:hover {
                     @include shadow(2);
+                    cursor: pointer;
                 }
                 &:focus {
                     border-bottom: 3px #EC1B2D solid;
@@ -286,6 +287,17 @@ body {
                     background-color: #C01924;
                     border: none;
                     @include shadow(2);
+                }
+            }
+            &-element {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                margin: 5px auto;
+                max-width: 80%;
+                input {
+                    margin: 0 5px;
+                    width: 120px;
                 }
             }
         }
