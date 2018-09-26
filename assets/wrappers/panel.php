@@ -7,11 +7,14 @@ if (!isset($_SESSION['User']) or !$_SESSION['User']->isLogged()) {
 // authentication of allowation
 
 $userData = $_SESSION['User']->getUserData();
-print_r($userData);
 
 return [
-    'accinfo' => [
-        'name'    => $userData['name'],
-        'surname' => $userData['surname'],
+    'account' => [
+        // Set datas on Profile box
+        'name'       => $userData['account']['accountName'],
+        'surname'    => $userData['account']['accountSurname'],
+        'login'      => $userData['account']['accountLogin'],
+        'company'    => $userData['company']['companyName'],
+        'workStatus' => ucfirst($userData['company']['accountWorkStatus']),
     ],
 ];

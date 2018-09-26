@@ -116,8 +116,8 @@ class User
             'accountID',
         ], [
             'OR' => [
-                'login[=]'    => $login,
-                'password[=]' => $email,
+                'accountLogin[=]'    => $login,
+                'accountPassword[=]' => $email,
             ],
         ]);
 
@@ -147,28 +147,33 @@ class User
 
         // database query
         $data = $this->_db->select('accounts', [
-            '[<]railcompanies' => [
+            '[>]railcompanies' => [
                 'companyID' => 'companyID',
             ],
         ], [
-            'accounts.accountID',
-            'accounts.name',
-            'accounts.surname',
-            'accounts.email',
-            'accounts.companyID',
-            'accounts.workStatus',
-            'accounts.active',
-            'accounts.lastLoginTime',
-            'accounts.registerTime',
-            'company.name',
+            'account' => [
+                'accountID',
+                'accountName',
+                'accountSurname',
+                'accountLogin',
+                'accountEmail',
+                'accountActive',
+                'accountLastLoginTime',
+                'accountRegisterTime',
+            ],
+            'company' => [
+                'railcompanies.companyID',
+                'railcompanies.companyName',
+                'accounts.accountWorkStatus',
+            ],
         ], [
             'AND' => [
-                'OR'          => [
-                    'login[=]' => $this->_userLogin,
-                    'email[=]' => $this->_userLogin,
+                'OR'                          => [
+                    'accounts.accountLogin[=]' => $this->_userLogin,
+                    'accounts.accountEmail[=]' => $this->_userLogin,
                 ],
-                'password[=]' => $this->_userPassword,
-                'active[=]'   => true,
+                'accounts.accountPassword[=]' => $this->_userPassword,
+                'accounts.accountActive[=]'   => true,
             ],
         ]);
 
@@ -177,11 +182,10 @@ class User
             $this->_isLogged = true;
 
             // set new last login time in database
-            $this->_updateLLT($data[0]['accountID']);
+            $this->_updateLLT($data[0]['account']['accountID']);
 
             // setting user details as class property
             $this->_userData = $data[0];
-            $this->_userData['fullName'] = $data[0]['name'] . " " . $data[0]['surname'];
 
             // freeing memory from unnessesary stuff
             $this->_userLogin = null;
@@ -203,7 +207,7 @@ class User
         $date = date('Y-m-d H:i:s');
 
         $this->_db->update('accounts', [
-            'lastLoginTime' => $date,
+            'accountLastLoginTime' => $date,
         ], [
             'accountID[=]' => $id,
         ]);
