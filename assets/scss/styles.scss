@@ -226,6 +226,10 @@ body {
             font-family: $condensedFont;
             text-align: center;
             margin-bottom: 10px;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
         }
         p {
             text-align: justify;
@@ -233,27 +237,48 @@ body {
             letter-spacing: 0;
             padding: 5px;
         }
+        /* region GUI */
         .gui-form {
             display: flex;
             flex-direction: column;
             justify-content: center;
             margin: 10px auto;
-            label {
+            .invisible {
                 display: none;
+            }
+            h3 {
+                font-family: $condensedFont;
+                font-size: 16px;
+                text-align: center;
+            }
+            label {
+                font-family: $normalFont;
+                font-size: 14px;
+                margin: 3px 0 4px;
+                text-align: center;
+                user-select: none;
             }
             input {
                 text-align: center;
                 display: block;
-                margin: 5px auto;
-                padding: 7px;
+                margin: 3px auto;
+                padding: 8px;
                 font-size: 16px;
-                width: 80%;
+                width: 280px;
                 font-family: $normalFont;
                 border: none;
                 border-bottom: 3px #EAEAEA solid;
                 background-color: #EAEAEA;
                 @include shadow(1);
                 transition: 0.2s ease-in-out all;
+                &:disabled {
+                    background-color: #BBBBBB;
+                    border-bottom: 3px #BBBBBB solid;
+                }
+                &:disabled:hover {
+                    @include shadow(1);
+                    cursor: not-allowed;
+                }
                 &:hover {
                     @include shadow(2);
                     cursor: pointer;
@@ -262,30 +287,63 @@ body {
                     border-bottom: 3px #EC1B2D solid;
                 }
             }
+
             .rememberme {
-                width: 80%;
-                margin: 5px auto;
+                align-items: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                margin: 2px auto;
+                width: 150px;
                 text-align: center;
                 input {
+                    @include shadow(1);
+                    background-color: #EAEAEA;
+                    border: none;
+                    color: #EC1B2D;
                     display: inline-block;
-                    width: auto;
-                    @include shadow(0);
+                    cursor: pointer;
+                    height: 25px;
+                    margin-right: 7px;
+                    outline: none;
+                    position: relative;
+                    width: 25px;
+                    &:checked::before {
+                        color: #EC1B2D;
+                        content: '\02143';
+                        font-weight: 800;
+                        left: 8px;
+                        position: absolute;
+                        top: 2px;
+                        transform: rotate(40deg);
+                    }
+                    &:hover {
+                        @include shadow(2);
+                        background-color: #EAEAEA;
+                        border: none;
+                    }
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
                 }
                 label {
                     display: inline-block;
                     font-size: 15px;
+                    width: 120px;
                     color: #444444;
+                    user-select: none;
+
                 }
             }
             .submit {
-                background-color: #EC1B2D;
-                color: #FFFFFF;
+                background-color: #EAEAEA;
+                border-bottom: 3px #EAEAEA solid;
                 border: none;
-                border-radius: 3px;
-                text-transform: uppercase;
+                color: #292929;
                 &:hover {
-                    background-color: #C01924;
+                    background-color: #EAEAEA;
                     border: none;
+                    border-bottom: 3px #EC1B2D solid;
                     @include shadow(2);
                 }
             }
@@ -294,22 +352,24 @@ body {
                 flex-direction: row;
                 justify-content: center;
                 margin: 5px auto;
-                max-width: 80%;
+                max-width: 300px;
                 input {
                     margin: 0 5px;
-                    width: 120px;
+                    width: 145px;
                 }
             }
         }
+        /* endregion */
         &-menu {
             .gui-menu-flatcard {
                 @include shadow(1);
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                margin: 5px auto;
                 background-color: #EAEAEA;
                 border-bottom: #EAEAEA solid 3px;
-                margin: 5px;
+                width: 280px;
                 padding: 8px 20px;
                 transition: all 0.2s ease-in-out;
                 color: #444444;

@@ -1,0 +1,46 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+
+    {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
+    <section class="gui-box">
+        <h2>Request slot</h2>
+        <p>Here you can request your new ride - enter train details, then track when agreement has to apply.</p>
+        <form class="gui-form" action="requestslot">
+            <label>Train details</label>
+            <div class="gui-form-element">
+                <input type="text" placeholder="train weight" name="trainID" id="trainID">
+                <input type="text" placeholder="train length" name="docID" id="docID">
+            </div>
+            <div class="gui-form-element">
+                <label for="" class="invisible"></label>
+                <input type="text" placeholder="coaches count" name="trainID" id="trainID">
+                <label for="" class="invisible"></label>
+                <input type="text" placeholder="height" name="docID" id="docID">
+            </div>
+            <label for="">Unit / Loco UIC number</label>
+            <input type="text" placeholder="unit UIC number" name="trainID" id="trainID">
+            <label for="">Train driver</label>
+            <input type="text" value="Name Surname" name="trainID" id="trainID" disabled>
+            <input class="submit" type="submit" value="Start >">
+        </form>
+        <div class="gui-box-menu">
+            <a class="gui-menu-flatcard last" href="startslot">
+                <span class="material-icons">add_circle_outline</span>
+                <p>Start existing slot</p>
+                <span class="material-icons">keyboard_arrow_right</span>
+            </a>
+            <a class="gui-menu-flatcard" href="serviceplanner">
+                <span class="material-icons">keyboard_arrow_left</span>
+                <p>Back to Service Planner</p>
+                <span class="material-icons">apps</span>
+            </a>
+        </div>
+    </section>
+    <section class="gui-box gui-warning">
+        <p>Typical error message</p>
+    </section>
+    {% include "common/footing.twig" %}
+</div>
+{% include "common/footer.twig" %}

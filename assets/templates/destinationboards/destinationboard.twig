@@ -1,0 +1,32 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+
+    {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
+    <section class="gui-box">
+        <h2>Destination boards</h2>
+        <p>Here you can set-up an electronic board in two ways: API or graphic way. Run graphic way to preserve
+            running browser with page on screens, or API for internal displays with only-API support.</p>
+        <p>You can set-up internal screens only when slot has been started by train crew.</p>
+        <form action="destinationboards" class="gui-form" method="post">
+            <label for="serviceID">Enter Service ID under what train is running</label>
+            <input type="text" placeholder="serviceID" name="serviceID" id="serviceID">
+            <label for="apikey">Enter access API key</label>
+            <input type="text" placeholder="Access key" name="apikey" id="apikey">
+            <input class="submit" type="submit" value="set up">
+        </form>
+        <div class="gui-box-menu">
+            <a class="gui-menu-flatcard" href="panel">
+                <span class="material-icons">keyboard_arrow_left</span>
+                <p>Back to applications</p>
+                <span class="material-icons">apps</span>
+            </a>
+        </div>
+    </section>
+    {% include "common/footing.twig" %}
+</div>
+<p class="gui-picture-author">Deutsche Bahn AG & archi_tektur &copy; 2018</p>
+
+
+{% include "common/footer.twig" %}

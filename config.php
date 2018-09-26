@@ -87,13 +87,17 @@ return [
 
     # Add adresses to our router. Key here is a URL adress user enters, and value is name of wrapper and twig files. When file is in subdirectory, you can use '/', e.g. 'login/recoverpassword'.
     'appRouter'        => [
-        '/'               => 'index',
-        '/login'          => 'login/login',
-        '/panel'          => 'panel',
-        '/serviceplanner' => 'serviceplanner/serviceplanner',
-        '/startslot'      => 'serviceplanner/startslot',
-        '/addslot'        => 'serviceplanner/addslot',
-        '/maintenance'    => 'maintenance/panel',
+        '/'                  => 'index',
+        '/login'             => 'login/login',
+        '/panel'             => 'panel',
+        '/serviceplanner'    => 'serviceplanner/serviceplanner',
+        '/startslot'         => 'serviceplanner/startslot',
+        '/addslot'           => 'serviceplanner/addslot',
+        '/requestslot'       => 'serviceplanner/requestslot',
+        '/destinationboards' => 'destinationboards/destinationboard',
+        '/displayboard'      => 'destinationboards/displayboard',
+        '/maintenance'       => 'maintenance/panel',
+        '/logoff'            => 'login/logoff',
     ],
 
     # Path to catalogue with errorcodes, files inside should be named like an errors they are written for - e.g. '404.html'. PHP is not allowed in this files. Until you modify framework internal structure (not recommended!), no need to touch this.

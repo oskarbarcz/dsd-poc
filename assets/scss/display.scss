@@ -1,0 +1,49 @@
+.display {
+    background: #000000;
+    color: #F7A90E;
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    .trainnumber {
+        align-content: center;
+        display: flex;
+        flex-direction: row;
+        font-size: 80px;
+        justify-content: space-between;
+        width: 100%;
+        .material-icons {
+            font-size: 80px;
+            font-weight: normal;
+            margin: 0;
+        }
+        p {
+            margin: 20px;
+        }
+        span {
+            font-weight: 800;
+            margin: 30px;
+        }
+    }
+    .nextstation {
+        bottom: 30px;
+        font-size: 120px;
+        position: absolute;
+        width: 100%;
+        p {
+            margin: 30px 0;
+        }
+        span {
+            font-weight: 800;
+            margin: 30px;
+        }
+        .next {
+            font-size: 40px;
+        }
+    }
+    hr {
+        border: 0;
+        border-top: 10px solid #F7A90E;
+        margin: 10px 0;
+    }
+}
