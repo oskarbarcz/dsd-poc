@@ -1,0 +1,47 @@
+/*
+    Contains GUI-BOX user card
+*/
+
+.gui-box {
+    &.gui-user {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        .profile-picture {
+            height: 60px;
+            clip-path: circle(50% at 50% 50%);
+        }
+        .gui-user-container {
+            margin: 0 10px;
+            width: 240px;
+            h2 {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            p {
+                color: #444444;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+            }
+        }
+        .gui-logoff {
+            @include shadow(1);
+            border: 3px #EC1B2D solid;
+            border-radius: 50%;
+            color: #EC1B2D;
+            margin-left: 10px;
+            padding: 5px;
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            width: 51px;
+            &:hover {
+                @include shadow(2);
+                border: 3px #C01924 solid;
+                color: #C01924;
+
+            }
+        }
+    }
+}

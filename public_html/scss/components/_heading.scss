@@ -1,0 +1,18 @@
+.gui-box {
+    &.heading {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        .logo {
+            height: 40px;
+            margin: 0 10px;
+        }
+        .title {
+            color: #444444;
+            font-family: $titleFont;
+            font-size: 30px;
+            text-transform: uppercase;
+        }
+        user-select: none;
+    }
+}

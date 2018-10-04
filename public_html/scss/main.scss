@@ -30,8 +30,12 @@ Contains all basic usage elements
 'base/environment';
 /* LAYOUT */
 /* COMPONENTS */
-@import 'components/display',
-'components/styles';
+@import 'components/heading',
+'components/footing',
+'components/display',
+'components/styles',
+'components/gui-userbox';
+
 /* PAGES */
 
 /* THEMES */
