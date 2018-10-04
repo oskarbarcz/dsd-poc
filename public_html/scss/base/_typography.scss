@@ -1,0 +1,57 @@
+/*
+ Deutsche Bahn Title Font
+ */
+@font-face {
+    font-family: 'Deutsche Bahn Title Font';
+    src: url('../../fonts/Changa/Changa-SemiBold.ttf.woff') format('woff'),
+    url('../../fonts/Changa/Changa-SemiBold.ttf.svg#Changa-SemiBold') format('svg'),
+    url('../../fonts/Changa/Changa-SemiBold.ttf.eot'),
+    url('../../fonts/Changa/Changa-SemiBold.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+ Roboto
+ */
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../fonts/Roboto/Roboto-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../../fonts/Roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/Roboto/Roboto-Regular.woff2') format('woff2'), /* Modern Browsers */
+    url('../../fonts/Roboto/Roboto-Regular.woff') format('woff'), /* Modern Browsers */
+    url('../../fonts/Roboto/Roboto-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../fonts/Roboto/Roboto-Regular.svg') format('svg'); /* Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+ Roboto Condensed
+ */
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.woff2') format('woff2'), /* Modern Browsers */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.woff') format('woff'), /* Modern Browsers */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.svg') format('svg'); /* Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+ Material Icons
+ */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/MaterialFont/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(../../fonts/MaterialFont/MaterialIcons-Regular.woff2) format('woff2'),
+    url(../../fonts/MaterialFont/MaterialIcons-Regular.woff) format('woff'),
+    url(../../fonts/MaterialFont/MaterialIcons-Regular.ttf) format('truetype');
+}

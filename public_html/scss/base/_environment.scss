@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    align-items: center;
+    background: url(../../img/backgrounds/2.jpg) no-repeat center center fixed;
+    background-size: cover;
+    color: #292929;
+    display: flex;
+    flex-direction: row;
+    font-family: $normalFont;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
