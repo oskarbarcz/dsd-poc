@@ -3,6 +3,10 @@
 use DBLS\Controller\User;
 use DBLS\Model\LoginData;
 
+if (isset($_SESSION['User']) and ($_SESSION['User'] instanceof User) and $_SESSION['User']->logUser()) {
+    header('Location: /panel');
+}
+
 if (isset($_POST['login'])) {
     try {
         $data = new LoginData($_POST['login'], $_POST['password'], true);
@@ -10,14 +14,16 @@ if (isset($_POST['login'])) {
         if ($_SESSION['User']->logUser()) {
             header('Location: /panel');
         } else return [
-            'error' => 'User with this login or email and password does not exists',
+            'windowTitle' => 'Wrong data occured',
+            'error'       => 'User with this login or email and password does not exists',
         ];
     } catch (Exception $exception) {
         return [
-            'error' => 'Unknown error occured, try again later',
+            'windowTitle' => 'Unknown login error',
+            'error'       => 'Unknown error occured, try again later',
         ];
     }
 
 }
 
-return [];
+return ['windowTitle' => 'Log in DBLS'];

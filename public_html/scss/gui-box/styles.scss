@@ -38,34 +38,34 @@ $condensedFont: "Roboto Condensed", sans-serif;
 
 @font-face {
     font-family: 'Deutsche Bahn Title Font';
-    src: url('../fonts/Changa/Changa-SemiBold.ttf.woff') format('woff'),
-    url('../fonts/Changa/Changa-SemiBold.ttf.svg#Changa-SemiBold') format('svg'),
-    url('../fonts/Changa/Changa-SemiBold.ttf.eot'),
-    url('../fonts/Changa/Changa-SemiBold.ttf.eot?#iefix') format('embedded-opentype');
+    src: url('../../fonts/Changa/Changa-SemiBold.ttf.woff') format('woff'),
+    url('../../fonts/Changa/Changa-SemiBold.ttf.svg#Changa-SemiBold') format('svg'),
+    url('../../fonts/Changa/Changa-SemiBold.ttf.eot'),
+    url('../../fonts/Changa/Changa-SemiBold.ttf.eot?#iefix') format('embedded-opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url('../fonts/Roboto/Roboto-Regular.eot'); /* IE9 Compat Modes */
-    src: url('../fonts/Roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../fonts/Roboto/Roboto-Regular.woff2') format('woff2'), /* Modern Browsers */
-    url('../fonts/Roboto/Roboto-Regular.woff') format('woff'), /* Modern Browsers */
-    url('../fonts/Roboto/Roboto-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-    url('../fonts/Roboto/Roboto-Regular.svg') format('svg'); /* Legacy iOS */
+    src: url('../../fonts/Roboto/Roboto-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../../fonts/Roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/Roboto/Roboto-Regular.woff2') format('woff2'), /* Modern Browsers */
+    url('../../fonts/Roboto/Roboto-Regular.woff') format('woff'), /* Modern Browsers */
+    url('../../fonts/Roboto/Roboto-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../fonts/Roboto/Roboto-Regular.svg') format('svg'); /* Legacy iOS */
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roboto Condensed';
-    src: url('../fonts/RobotoCondensed/RobotoCondensed-Regular.eot'); /* IE9 Compat Modes */
-    src: url('../fonts/RobotoCondensed/RobotoCondensed-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../fonts/RobotoCondensed/RobotoCondensed-Regular.woff2') format('woff2'), /* Modern Browsers */
-    url('../fonts/RobotoCondensed/RobotoCondensed-Regular.woff') format('woff'), /* Modern Browsers */
-    url('../fonts/RobotoCondensed/RobotoCondensed-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-    url('../fonts/RobotoCondensed/RobotoCondensed-Regular.svg') format('svg'); /* Legacy iOS */
+    src: url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.woff2') format('woff2'), /* Modern Browsers */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.woff') format('woff'), /* Modern Browsers */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../fonts/RobotoCondensed/RobotoCondensed-Regular.svg') format('svg'); /* Legacy iOS */
     font-weight: normal;
     font-style: normal;
 }
@@ -77,13 +77,13 @@ $condensedFont: "Roboto Condensed", sans-serif;
     src: url(../fonts/MaterialFont/MaterialIcons-Regular.eot); /* For IE6-8 */
     src: local('Material Icons'),
     local('MaterialIcons-Regular'),
-    url(../fonts/MaterialFont/MaterialIcons-Regular.woff2) format('woff2'),
-    url(../fonts/MaterialFont/MaterialIcons-Regular.woff) format('woff'),
-    url(../fonts/MaterialFont/MaterialIcons-Regular.ttf) format('truetype');
+    url(../../fonts/MaterialFont/MaterialIcons-Regular.woff2) format('woff2'),
+    url(../../fonts/MaterialFont/MaterialIcons-Regular.woff) format('woff'),
+    url(../../fonts/MaterialFont/MaterialIcons-Regular.ttf) format('truetype');
 }
 
 .material-icons {
-    font-family: 'Material Icons';
+    font-family: 'Material Icons', sans-serif;
     font-weight: normal;
     font-style: normal;
     font-size: 24px; /* Preferred icon size */
@@ -120,7 +120,7 @@ html {
 
 body {
     font-family: $normalFont;
-    background: url(../img/backgrounds/2.jpg) no-repeat center center fixed;
+    background: url(../../img/backgrounds/2.jpg) no-repeat center center fixed;
     background-size: cover;
     position: relative;
     display: flex;
@@ -134,13 +134,13 @@ body {
 
 /* endregion */
 /* region UNIVERSAL GUI */
+
 .gui-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 400px;
-
+    /* region GUI BOX */
     .gui-box {
         @include shadow(1);
         background-color: rgba(255, 255, 255, 0.9);
@@ -148,6 +148,13 @@ body {
         min-height: 50px;
         width: 350px;
         padding: 10px 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+        h3 {
+            color: #666666;
+            font-size: 16px;
+            text-align: center;
+        }
         &.gui-warning {
             display: flex;
             align-items: center;
@@ -237,7 +244,7 @@ body {
             letter-spacing: 0;
             padding: 5px;
         }
-        /* region GUI */
+        /* region GUI FORM */
         .gui-form {
             display: flex;
             flex-direction: column;
@@ -338,7 +345,6 @@ body {
             .submit {
                 background-color: #EAEAEA;
                 border-bottom: 3px #EAEAEA solid;
-                border: none;
                 color: #292929;
                 &:hover {
                     background-color: #EAEAEA;
@@ -363,6 +369,7 @@ body {
         &-menu {
             .gui-menu-flatcard {
                 @include shadow(1);
+                user-select: none;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -388,6 +395,114 @@ body {
                     width: 220px;
                     text-align: center;
                 }
+            }
+        }
+        &-panel {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0 auto;
+            max-width: 290px;
+            .invisible {
+                display: none;
+            }
+            .box-panel-input,
+            .box-panel-select {
+                background-color: #EAEAEA;
+                border: none;
+                border-bottom: 3px #EAEAEA solid;
+                display: block;
+                font-family: $normalFont;
+                font-size: 16px;
+                margin: 2px auto;
+                padding: 8px;
+                text-align: center;
+                transition: 0.2s ease-in-out all;
+                @include shadow(1);
+                width: calc(30% - 8px);
+                &:disabled {
+                    background-color: #BBBBBB;
+                    border-bottom: 3px #BBBBBB solid;
+                }
+                &:disabled:hover {
+                    @include shadow(1);
+                    cursor: not-allowed;
+                }
+                &:hover {
+                    @include shadow(2);
+                    cursor: pointer;
+                }
+                &:focus {
+                    border-bottom: 3px #EC1B2D solid;
+                }
+            }
+            .box-panel-select {
+                width: calc(100% - 8px);
+            }
+            .box-panel-flatcard {
+                align-items: center;
+                @include shadow(1);
+                background-color: #EAEAEA;
+                border: 0;
+                border-bottom: #EAEAEA solid 3px;
+                color: #444444;
+                display: flex;
+                font-family: $normalFont;
+                font-size: 14px;
+                justify-content: center;
+                margin: 3px auto;
+                padding: 8px 20px;
+                text-decoration: none;
+                transition: all 0.2s ease-in-out;
+                width: 136px;
+                &:hover {
+                    @include shadow(2);
+                    border-bottom: #EC1B2D solid 3px;
+                }
+                &.longer {
+                    width: calc(70% - 8px);
+                }
+                &.disabled {
+                    background-color: #DDDDDD;
+                    border-bottom: #DDDDDD solid 3px;
+                    color: #666666;
+                    cursor: not-allowed;
+                    &:hover {
+                        @include shadow(1);
+                        border-bottom: #DDDDDD solid 3px;
+                    }
+                    .material-icons {
+                        color: #292929;
+                    }
+                }
+                .material-icons {
+                    color: #EC1B2D;
+                }
+                p {
+                    display: block;
+                    text-align: center;
+                    width: 80%;
+                }
+                user-select: none;
+            }
+        }
+        .gui-box-section {
+            h3 {
+                color: #444444;
+                font-family: $condensedFont;
+                font-size: 20px;
+                margin-top: 10px;
+                text-align: center;
+            }
+            p {
+                color: #444444;
+                text-align: center;
+            }
+            .detail {
+                color: #EC1B2D;
+                font-family: 'Bahnschrift', $condensedFont;
+                font-size: 20px;
             }
         }
         &.gui-user {
@@ -431,7 +546,64 @@ body {
                 }
             }
         }
+        .train-details {
+            color: #444444;
+            line-height: 0.6;
+
+            .train-name {
+                font-family: $titleFont;
+                font-size: 24px;
+            }
+            p {
+                text-align: center;
+            }
+        }
+        .gui-timetable {
+            margin: 10px 0;
+            width: 100%;
+            .row {
+                font-family: "Bahnschrift", $condensedFont;
+                line-height: 1.2;
+                text-align: center;
+                .distance {
+                    width: 30%;
+                }
+                .object {
+                    width: 70%;
+                }
+                &.city {
+                    color: #444444;
+                    font-size: 24px;
+                }
+                &.town {
+                    color: #444444;
+                    font-size: 20px;
+                }
+                &.commuter {
+                    color: #006C33;
+                    font-size: 18px;
+                }
+                &.rail {
+                    color: #666666;
+                    font-size: 16px;
+                }
+                &.river {
+                    color: #A442F4;
+                    font-size: 16px;
+                }
+                &.motorway {
+                    color: #266CB1;
+                    font-size: 16px;
+                }
+                &.road {
+                    color: #E8C400;
+                    font-size: 16px;
+                }
+            }
+
+        }
     }
+    /* endregion */
 }
 
 .gui-picture-author {
@@ -443,5 +615,9 @@ body {
     font-size: 14px;
     user-select: none;
 }
+
+/* endregion */
+
+/* region DRIVE */
 
 /* endregion */
