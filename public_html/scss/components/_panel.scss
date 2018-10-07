@@ -1,0 +1,93 @@
+.gui-box {
+    &-panel {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 290px;
+        .invisible {
+            display: none;
+        }
+        .box-panel-input,
+        .box-panel-select {
+            background-color: #EAEAEA;
+            border: none;
+            border-bottom: 3px #EAEAEA solid;
+            display: block;
+            font-family: $normalFont;
+            font-size: 16px;
+            margin: 2px auto;
+            padding: 8px;
+            text-align: center;
+            transition: 0.2s ease-in-out all;
+            @include shadow(1);
+            width: calc(30% - 8px);
+            &:disabled {
+                background-color: #BBBBBB;
+                border-bottom: 3px #BBBBBB solid;
+            }
+            &:disabled:hover {
+                @include shadow(1);
+                cursor: not-allowed;
+            }
+            &:hover {
+                @include shadow(2);
+                cursor: pointer;
+            }
+            &:focus {
+                border-bottom: 3px #EC1B2D solid;
+            }
+        }
+        .box-panel-select {
+            width: calc(100% - 8px);
+        }
+        .box-panel-flatcard {
+            align-items: center;
+            @include shadow(1);
+            background-color: #EAEAEA;
+            border: 0;
+            border-bottom: #EAEAEA solid 3px;
+            color: #444444;
+            display: flex;
+            font-family: $normalFont;
+            font-size: 14px;
+            justify-content: center;
+            margin: 3px auto;
+            padding: 8px 20px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            width: 136px;
+            &:hover {
+                @include shadow(2);
+                border-bottom: #EC1B2D solid 3px;
+            }
+            &.longer {
+                width: calc(70% - 8px);
+            }
+            &.disabled {
+                background-color: #DDDDDD;
+                border-bottom: #DDDDDD solid 3px;
+                color: #666666;
+                cursor: not-allowed;
+                &:hover {
+                    @include shadow(1);
+                    border-bottom: #DDDDDD solid 3px;
+                }
+                .material-icons {
+                    color: #292929;
+                }
+            }
+            .material-icons {
+                color: #EC1B2D;
+            }
+            p {
+                display: block;
+                text-align: center;
+                width: 80%;
+            }
+            user-select: none;
+        }
+    }
+}
+

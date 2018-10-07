@@ -98,6 +98,7 @@ return [
         '/displayboard'      => 'destinationboards/displayboard',
         '/maintenance'       => 'maintenance/panel',
         '/profiles'          => 'profilesmanagement/profiles',
+        '/carriers'          => 'profilesmanagement/carriers',
         '/drive'             => 'drive',
         '/logoff'            => 'login/logoff',
     ],

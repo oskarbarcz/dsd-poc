@@ -1,0 +1,131 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+    {% include "common/heading.twig" %}
+    <section class="gui-box">
+        <h2>Carriers management</h2>
+        <ul class="carrierlist">
+            <li class="carrier">
+                <img class="profile-picture" src="/../img/automated/carriers/dbag.png" alt="">
+                <div class="data">
+                    <span class="name">Deutsche Bahn AG</span>
+                    <span class="company">Alexanderplatz 1, Berlin, Germany</span>
+                </div>
+                <a class="icon" href="">
+                    <span class="material-icons">edit</span>
+                </a>
+                <a class="icon" href="">
+                    <span class="material-icons">delete</span>
+                </a>
+            </li>
+            <li class="carrier">
+                <img class="profile-picture" src="/../img/automated/carriers/pkpic.jpg" alt="">
+                <div class="data">
+                    <span class="name">PKP Intercity</span>
+                    <span class="company">Marszałkowska 23A, Warszawa, Polska</span>
+                </div>
+                <a class="icon" href="">
+                    <span class="material-icons">edit</span>
+                </a>
+                <a class="icon" href="">
+                    <span class="material-icons">delete</span>
+                </a>
+            </li>
+            <li class="carrier">
+                <img class="profile-picture" src="/../img/automated/carriers/pkpplk.png" alt="">
+                <div class="data">
+                    <span class="name">PKP Polskie Linie Kolejowe</span>
+                    <span class="company">Marszałkowska 23B, Warszawa, Polska</span>
+                </div>
+                <a class="icon" href="">
+                    <span class="material-icons">edit</span>
+                </a>
+                <a class="icon" href="">
+                    <span class="material-icons">delete</span>
+                </a>
+            </li>
+            <li class="carrier">
+                <img class="profile-picture" src="/../img/automated/carriers/oebb.png" alt="">
+                <div class="data">
+                    <span class="name">Osterreicher Bundesbahnen</span>
+                    <span class="company">Wiener Str. 23B, Wien, Osterreich</span>
+                </div>
+                <a class="icon" href="">
+                    <span class="material-icons">edit</span>
+                </a>
+                <a class="icon" href="">
+                    <span class="material-icons">delete</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <section class="gui-box">
+        <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="/carriers/add">
+                    <span class="material-icons">dvr</span>
+                    <p class="menutext">Add new carrier</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="/profiles">
+                    <span class="material-icons">account_circle</span>
+                    <p class="menutext">User management</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="/panel">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p class="menutext">Applications</p>
+                    <span class="material-icons">apps</span>
+                </a>
+            </li>
+
+        </ul>
+    </section>
+    {% include "common/footing.twig" %}
+</div>
+
+
+<div class="gui-container">
+    <section class="gui-box">
+        <h2>Add carrier</h2>
+        <form action="" method="post" class="gui-form">
+            <h3>Carrier details</h3>
+            <label for="fullname">Carrier full name</label>
+            <input id="fullname" name="name" type="text" placeholder="Full name">
+            <label for="address">Carrier full address</label>
+            <input id="address" name="address" type="text" placeholder="Full address">
+            <label for="nip">Carrier NIP</label>
+            <input id="nip" name="nip" type="text" placeholder="NIP">
+            <label for="regon">Carrier REGON</label>
+            <input name="regon" id="regon" type="text" placeholder="REGON">
+            <label for="uiccode">Carrier UIC Code</label>
+            <select name="uiccode" id="uiccode">
+                <option disabled>Choose country:</option>
+                <option value="de" selected>DE (Germany)</option>
+                <option value="pl">PL (Poland)</option>
+                <option value="fr">AU (Austria)</option>
+                <option value="fr">CH (Suisse)</option>
+                <option value="ne">NE (Netherlands)</option>
+                <option value="dk">DK (Denmark)</option>
+                <option value="dk">RU (Russia)</option>
+                <option value="it">IT (Italy)</option>
+                <option value="bg">BE (Belgium)</option>
+                <option value="se">SE (Sweden)</option>
+                <option value="ua">UA (Ukraine)</option>
+                <option value="be">BE (Belarus)</option>
+                <option value="UK">UK (Great Britain)</option>
+                <option value="LX">LX (Luxenburg)</option>
+            </select>
+            <h3>Carrier logo</h3>
+            <input class="file" type="file" accept="image/x-png,image/jpeg" name="profilepicker" id="profilepicker">
+            <label for="profilepicker">Choose a profile picture</label>
+            <input type="submit" value="Create account" class="submit">
+        </form>
+    </section>
+</div>
+{% include "common/footer.twig" %}

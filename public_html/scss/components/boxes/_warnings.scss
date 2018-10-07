@@ -1,0 +1,16 @@
+.gui-box {
+    &.gui-warning {
+        align-items: center;
+        background-color: rgba(236, 27, 45, 0.9);
+        color: #FFFFFF;
+        display: flex;
+        justify-content: center;
+    }
+    &.gui-success {
+        align-items: center;
+        background-color: rgba(0, 199, 0, 0.9);
+        color: #FFFFFF;
+        display: flex;
+        justify-content: center;
+    }
+}

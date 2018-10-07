@@ -2,16 +2,14 @@
 
 <div class="gui-container">
     {% include "common/heading.twig" %}
-    <section class="gui-box">
-        <div class="train-details">
-            <p class="train-name">InterCity 44</p>
-            <p>Max Planck</p>
-            <p>Berlin Hbf - Praha Hl.N.</p>
-            <p>Actual train delay: 5 min</p>
-            <p>DB Fernverkehr</p>
-        </div>
+    <section class="gui-box traindrivedetails">
+        <p class="service">InterCity 44</p>
+        <p>Max Planck</p>
+        <p>Berlin Hbf - Praha Hl.N.</p>
+        <p>Actual train delay: 5 min</p>
+        <p>DB Fernverkehr</p>
     </section>
-    <section class="gui-box">
+    <section class="gui-box drivecontrolpanel">
         <h2>Train Control Panel</h2>
         <div class="gui-box-section">
             <h3>Station switcher</h3>
@@ -47,26 +45,11 @@
                 <input type="submit" class="box-panel-flatcard longer" value="Send delay to the system">
             </form>
         </div>
-
         <ul class="gui-box-menu">
-            <li title="Opens new window">
-                <a class="gui-menu-flatcard last" href="/destinationboards" target="_blank">
-                    <span class="material-icons">dvr</span>
-                    <p>Destination boards</p>
-                    <span class="material-icons">keyboard_arrow_right</span>
-                </a>
-            </li>
-            <li>
-                <a class="gui-menu-flatcard" href="">
-                    <span class="material-icons">local_printshop</span>
-                    <p>Ticket sell</p>
-                    <span class="material-icons">keyboard_arrow_right</span>
-                </a>
-            </li>
             <li>
                 <a class="gui-menu-flatcard last" href="/panel">
                     <span class="material-icons">keyboard_arrow_left</span>
-                    <p>Back to applications</p>
+                    <p class="menutext">Back to applications</p>
                     <span class="material-icons">apps</span>
                 </a>
             </li>
@@ -76,10 +59,10 @@
 </div>
 <div class="gui-container">
     {% include "common/gui-user.twig" %}
-    <section class="gui-box">
+    <section class="gui-box objectlist">
         <h2>Line object list</h2>
         <h3>KBS330 Munich HBF - Garmich HBF</h3>
-        <table class="gui-timetable">
+        <table class="table">
             <tr class="row city">
                 <td class="distance">1.2</td>
                 <td class="object">Station</td>

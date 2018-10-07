@@ -1,0 +1,157 @@
+.gui-box {
+    .gui-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 10px auto;
+        .invisible {
+            display: none;
+        }
+        h3 {
+            color: #666666;
+            font-family: $condensedFont;
+            font-size: 18px;
+            margin-top: 5px;
+            text-align: center;
+        }
+        label {
+            font-family: $normalFont;
+            font-size: 14px;
+            margin: 3px 0 4px;
+            text-align: center;
+            user-select: none;
+        }
+        input,
+        select {
+            background-color: #EAEAEA;
+            border: none;
+            border-bottom: 3px #EAEAEA solid;
+            display: block;
+            font-family: $normalFont;
+            font-size: 16px;
+            margin: 3px auto;
+            padding: 8px;
+            text-align: center;
+            transition: 0.2s ease-in-out all;
+            @include shadow(1);
+            width: 280px;
+            &:disabled {
+                background-color: #BBBBBB;
+                border-bottom: 3px #BBBBBB solid;
+            }
+            &:disabled:hover {
+                @include shadow(1);
+                cursor: not-allowed;
+            }
+            &:hover {
+                @include shadow(2);
+                cursor: pointer;
+            }
+            &:focus {
+                border-bottom: 3px #EC1B2D solid;
+            }
+        }
+        .file {
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            width: 0.1px;
+            z-index: -1;
+        }
+        .file + label {
+            background-color: #EAEAEA;
+            border: none;
+            border-bottom: 3px #EAEAEA solid;
+            display: block;
+            font-family: $normalFont;
+            font-size: 16px;
+            margin: 3px auto;
+            padding: 8px;
+            text-align: center;
+            transition: 0.2s ease-in-out all;
+            @include shadow(1);
+            width: 280px;
+        }
+        .file + label {
+            cursor: pointer; /* "hand" cursor */
+        }
+
+        .file:focus + label,
+        .file + label:hover {
+            @include shadow(2);
+            border-bottom: 3px #EC1B2D solid;
+            cursor: pointer;
+        }
+
+        .rememberme {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 2px auto;
+            text-align: center;
+            width: 150px;
+            input {
+                @include shadow(1);
+                background-color: #EAEAEA;
+                border: none;
+                color: #EC1B2D;
+                cursor: pointer;
+                display: inline-block;
+                height: 25px;
+                margin-right: 7px;
+                outline: none;
+                position: relative;
+                width: 25px;
+                &:checked::before {
+                    color: #EC1B2D;
+                    content: '\02143';
+                    font-weight: 800;
+                    left: 8px;
+                    position: absolute;
+                    top: 2px;
+                    transform: rotate(40deg);
+                }
+                &:hover {
+                    @include shadow(2);
+                    background-color: #EAEAEA;
+                    border: none;
+                }
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+            }
+            label {
+                color: #444444;
+                display: inline-block;
+                font-size: 15px;
+                width: 120px;
+                user-select: none;
+
+            }
+        }
+        .submit {
+            background-color: #EAEAEA;
+            border-bottom: 3px #EAEAEA solid;
+            color: #292929;
+            &:hover {
+                background-color: #EAEAEA;
+                border: none;
+                border-bottom: 3px #EC1B2D solid;
+                @include shadow(2);
+            }
+        }
+        &-element {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 5px auto;
+            max-width: 300px;
+            input {
+                margin: 0 5px;
+                width: 145px;
+            }
+        }
+    }
+}

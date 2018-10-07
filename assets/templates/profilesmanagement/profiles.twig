@@ -2,9 +2,125 @@
 
 <div class="gui-container">
     {% include "common/heading.twig" %}
-    <div class="gui-box">
+    <section class="gui-box">
         <h2>Profiles management</h2>
-    </div>
+        <ul class="userlist">
+            <li class="user">
+                <img class="profile-picture" src="/../img/automated/profilepics/login.jpg" alt="">
+                <div class="data">
+                    <span class="name">Name Surname</span>
+                    <span class="company"> Deutsche Bahn AG</span>
+                </div>
+                <a class="icon" href="">
+                    <span class="material-icons">edit</span>
+                </a>
+                <a class="icon" href="">
+                    <span class="material-icons">delete</span>
+                </a>
+            </li>
+            <li class="user">
+                <img class="profile-picture" src="/../img/automated/profilepics/login2.jpg" alt="">
+                <div class="data">
+                    <span class="name">Name Surname 2</span>
+                    <span class="company"> DB AG</span>
+                </div>
+                <a class="icon" href="">
+                    <span class="material-icons">edit</span>
+                </a>
+                <a class="icon" href="">
+                    <span class="material-icons">delete</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <section class="gui-box">
+        <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="/profiles/add">
+                    <span class="material-icons">dvr</span>
+                    <p class="menutext">Add new user</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="/panel">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p class="menutext">Applications</p>
+                    <span class="material-icons">apps</span>
+                </a>
+            </li>
+        </ul>
+    </section>
     {% include "common/footing.twig" %}
 </div>
+
+
+<div class="gui-container">
+    <section class="gui-box">
+        <h2>Add an user</h2>
+        <form class="gui-form" method="post" action="">
+            <h3>Personal data</h3>
+            <label for="">Enter new user name...</label>
+            <input type="text" placeholder="Name" name="" id="">
+            <label for="">... and then his surname</label>
+            <input type="text" placeholder="Surname" name="" id="">
+            <label for="">Choose assigned carrier</label>
+            <select name="" id="">
+                <option value="" disabled>Choose assigned carrier</option>
+                <option value="">Deutsche Bahn AG</option>
+                <option value="">Other</option>
+                <option value="">Other</option>
+                <option value="">Other</option>
+            </select>
+            <label for="">Occupation</label>
+            <input type="text" placeholder="Work status" name="" id="">
+            <h3>Login info</h3>
+            <label for="">Enter new user login</label>
+            <input type="text" placeholder="login" name="" id="">
+            <label for="">Provide valid e-mail</label>
+            <input type="text" placeholder="e-mail" name="" id="">
+            <label for="">Provide strong password</label>
+            <input type="password" placeholder="Enter password" name="" id="">
+            <label class="invisible" for="">Provide password again</label>
+            <input type="password" placeholder="Retype password" name="" id="">
+            <h3>Profile picture</h3>
+            <input class="file" type="file" name="profilepicker" accept="image/x-png,image/jpeg" id="profilepicker">
+            <label for="profilepicker">Choose a profile picture</label>
+            <input type="submit" value="Create account" class="submit">
+
+        </form>
+    </section>
+</div>
+
+<div class="gui-container">
+    <section class="gui-box">
+        <h2>Edit an user</h2>
+        <p>Here you have actual credintials of this user. You can't edit person's password and profile picture - it can
+            be afforded only by themselves.</p>
+        <form class="gui-form" method="post" action="">
+            <h3>Personal data</h3>
+            <label for="">Enter new user name...</label>
+            <input type="text" placeholder="Name" name="" id="">
+            <label for="">... and then his surname</label>
+            <input type="text" placeholder="Surname" name="" id="">
+            <label for="">Choose assigned carrier</label>
+            <select name="" id="">
+                <option value="" disabled>Choose assigned carrier</option>
+                <option value="">Deutsche Bahn AG</option>
+                <option value="">Other</option>
+                <option value="">Other</option>
+                <option value="">Other</option>
+            </select>
+            <label for="">Occupation</label>
+            <input type="text" placeholder="Work status" name="" id="">
+            <h3>Login info</h3>
+            <label for="">Enter new user login</label>
+            <input type="text" placeholder="login" name="" id="">
+            <label for="">Provide valid e-mail</label>
+            <input type="text" placeholder="e-mail" name="" id="">
+        </form>
+    </section>
+</div>
+
 {% include "common/footer.twig" %}

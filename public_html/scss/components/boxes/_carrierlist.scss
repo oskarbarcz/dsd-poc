@@ -1,0 +1,49 @@
+.gui-box {
+    .carrierlist {
+        .carrier {
+            @include shadow(1);
+            align-items: center;
+            background-color: #EAEAEA;
+            color: #444444;
+            display: flex;
+            justify-content: space-between;
+            margin: 5px auto;
+            padding: 5px 10px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            width: 300px;
+            .profile-picture {
+                max-height: 25px;
+                max-width: 75px;
+                width: auto;
+                object-fit: cover;
+            }
+            .data {
+                text-align: center;
+                width: 180px;
+                .name {
+                    display: block;
+                }
+                .company {
+                    color: #666666;
+                    display: block;
+                    font-size: 12px;
+                }
+            }
+            .icon {
+                .material-icons {
+                    color: #EC1B2D;
+                    display: inline-block;
+                    font-size: 24px;
+                    margin: 0 5px;
+                    text-align: center;
+                    transition: 0.2s ease-in-out all;
+                    &:hover {
+                        color: #444444;
+                    }
+                }
+            }
+            user-select: none;
+        }
+    }
+}

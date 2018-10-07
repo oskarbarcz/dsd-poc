@@ -1,0 +1,15 @@
+.gui-box {
+    &.traindrivedetails {
+        color: #444444;
+        line-height: 0.6;
+
+        .service {
+            font-family: $titleFont;
+            font-size: 24px;
+        }
+        p {
+            text-align: center;
+        }
+    }
+}
+

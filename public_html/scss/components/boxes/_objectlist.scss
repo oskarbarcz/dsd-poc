@@ -1,0 +1,48 @@
+.gui-box {
+    &.objectlist {
+        .table {
+            margin: 10px 0;
+            width: 100%;
+            .row {
+                font-family: "Bahnschrift", $condensedFont;
+                line-height: 1.2;
+                text-align: center;
+                .distance {
+                    width: 30%;
+                }
+                .object {
+                    width: 70%;
+                }
+                &.city {
+                    color: #444444;
+                    font-size: 24px;
+                }
+                &.town {
+                    color: #444444;
+                    font-size: 20px;
+                }
+                &.commuter {
+                    color: #006C33;
+                    font-size: 18px;
+                }
+                &.rail {
+                    color: #666666;
+                    font-size: 16px;
+                }
+                &.river {
+                    color: #A442F4;
+                    font-size: 16px;
+                }
+                &.motorway {
+                    color: #266CB1;
+                    font-size: 16px;
+                }
+                &.road {
+                    color: #E8C400;
+                    font-size: 16px;
+                }
+            }
+        }
+
+    }
+}

@@ -1,0 +1,37 @@
+.gui-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .gui-box {
+        @include shadow(1);
+        background-color: rgba(255, 255, 255, 0.9);
+        margin: 2px;
+        max-height: 80vh;
+        min-height: 50px;
+        overflow-y: auto;
+        padding: 10px 20px;
+        width: 350px;
+        h2 {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            font-family: $condensedFont;
+            font-size: 24px;
+            justify-content: center;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        > h3 {
+            color: #666666;
+            font-size: 16px;
+            text-align: center;
+        }
+        p {
+            font-size: 15px;
+            letter-spacing: 0;
+            padding: 5px;
+            text-align: justify;
+        }
+    }
+}

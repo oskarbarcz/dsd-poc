@@ -1,0 +1,22 @@
+.gui-box {
+    &.drivecontrolpanel {
+        .gui-box-section {
+            h3 {
+                color: #444444;
+                font-family: $condensedFont;
+                font-size: 20px;
+                margin-top: 10px;
+                text-align: center;
+            }
+            p {
+                color: #444444;
+                text-align: center;
+            }
+            .detail {
+                color: #EC1B2D;
+                font-family: 'Bahnschrift', $condensedFont;
+                font-size: 20px;
+            }
+        }
+    }
+}
