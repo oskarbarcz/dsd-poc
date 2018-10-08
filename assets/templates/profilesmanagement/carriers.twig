@@ -11,26 +11,26 @@
             <ul class="carrierlist">
                 {% for carrier in carriers %}
                     <li class="carrier">
-                        {% if carrier.companyLogoPath %}
-                            <img class="profile-picture" src="/../img/automated/{{carrier.companyLogoPath}}" alt="">
+                        {% if carrier.carrierLogoPath %}
+                            <img class="profile-picture" src="/../img/automated/{{carrier.carrierLogoPath}}" alt="">
                         {% else %}
                             <span class="material-icons profile-picture">close</span>
                         {% endif %}
                         <div class="data">
-                            <span class="name">{{carrier.companyName}}</span>
-                            <span class="company">{{carrier.companyAddress}}</span>
+                            <span class="name">{{carrier.carrierName}}</span>
+                            <span class="company">{{carrier.carrierAddress}}</span>
                         </div>
-                        {% if carrier.companyActive %}
-                            <a class="icon" href="/carriers/edit/{{carrier.companyID}}">
+                        {% if carrier.carrierActive %}
+                            <a class="icon" href="/carriers/edit/{{carrier.carrierID}}">
                                 <span class="material-icons">edit</span>
                             </a>
                         {% else %}
-                            <a class="icon" href="/carriers/edit/{{carrier.companyID}}">
+                            <a class="icon" href="/carriers/edit/{{carrier.carrierID}}">
                                 <span class="material-icons">lock</span>
                             </a>
                         {% endif %}
 
-                        <a class="icon" href="/carriers/delete/{{carrier.companyID}}">
+                        <a class="icon" href="/carriers/delete/{{carrier.carrierID}}">
                             <span class="material-icons">delete</span>
                         </a>
                     </li>
@@ -72,7 +72,7 @@
     <div class="gui-container">
         <section class="gui-box">
             <h2>Add carrier</h2>
-            <form action="" method="post" class="gui-form">
+            <form enctype="multipart/form-data" action="/carriers" method="post" class="gui-form">
                 <h3>Carrier details</h3>
                 <label for="fullname">Carrier full name</label>
                 <input value="{{formerForm.add_fullname}}" id="fullname" name="add_fullname" type="text"
@@ -83,19 +83,27 @@
                        type="text"
                        placeholder="Full address"
                        required>
-                <label for="nip">Carrier NIP</label>
+                <label for="cec">Carrier Evidence Code</label>
                 <input value="{{formerForm.nip}}"
-                       id="nip"
-                       name="nip"
+                       id="cec"
+                       name="cec"
                        max="10"
                        type="text"
-                       placeholder="NIP"
+                       placeholder="Evidence number"
                        required>
-                <label for="regon">Carrier REGON</label>
-                <input value="{{formerForm.regon}}" name="regon" id="regon" type="text" maxlength="14"
-                       placeholder="REGON" required>
-                <label for="uiccode">Carrier UIC Code</label>
-                <select name="uiccode" id="uiccode" required>
+                <label for="uic">Carrier UIC code</label>
+                <input value="{{formerForm.uic}}"
+                       id="uic"
+                       name="uic"
+                       max="8"
+                       type="text"
+                       placeholder="UIC Carrier Code"
+                       required>
+                <label for="regon">Admittance ID</label>
+                <input value="{{formerForm.adid}}" name="adid" id="adid" type="text" maxlength="14"
+                       placeholder="Admittance ID" required>
+                <label for="country">Carrier country</label>
+                <select name="country" id="country" required>
                     <option disabled>Choose country:</option>
                     <option value="de" selected>DE (Germany)</option>
                     <option value="pl">PL (Poland)</option>
@@ -113,9 +121,9 @@
                     <option value="LX">LX (Luxenburg)</option>
                 </select>
                 <h3>Carrier logo</h3>
-                <input class="file" type="file" accept="image/x-png,image/jpeg" name="profilepicker" id="profilepicker"
+                <input class="file" type="file" accept="image/x-png,image/jpeg" name="logopicker" id="logopicker"
                        required>
-                <label for="profilepicker">Choose a carrier logo</label>
+                <label for="logopicker">Choose a carrier logo</label>
                 <div class="rememberme">
                     <input name="active"
                            id="active"

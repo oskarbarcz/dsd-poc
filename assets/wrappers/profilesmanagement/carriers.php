@@ -1,7 +1,6 @@
 <?php
 
 use DBLS\Controller\CarrierHandler;
-use DBLS\Model\NewCarrierData;
 
 $CarrierHandler = new CarrierHandler();
 // Download all current carriers
@@ -50,21 +49,31 @@ if (array_key_exists(1, ROUTER) and ROUTER[1] === 'add') {
 // if add form submitted
 if (isset($_POST['add_fullname'])) {
     try {
-        $Data = new NewCarrierData($_POST['add_fullname'], $_POST['address'], $_POST['nip'], $_POST['regon'], $_POST['uiccode']);
-        $CarrierHandler->addCarrier($Data, null);
+//        $Data = new NewCarrierData($_POST['add_fullname'], $_POST['address'], $_POST['nip'], $_POST['regon'], $_POST['uiccode']);
+//        $CarrierHandler->addCarrier($Data, null);
+
+        $tempPath = "{$_SERVER['DOCUMENT_ROOT']}/img/automated/";
+
+        $File = new \DBLS\Controller\UploadCatcher($tempPath);
+        $File->catchImage();
+        $File->setFile($_POST['add_fullname'], 'carriers');
+        if ($File->getExtention() == "png") {
+            $File->changeToJPG();
+        }
+
         // commit once more time if operation were runned
         $carriers = $CarrierHandler->getCarriers(true);
         return [
             'good'       => 'Carrier added successfully',
             'carriers'   => $carriers,
-            'sideWindow' => $sideWindow,
+            'sideWindow' => 'add',
         ];
     } catch (Exception $e) {
         return [
             'formerForm' => $_POST,
             'error'      => $e->getMessage(),
             'carriers'   => $carriers,
-            'sideWindow' => $sideWindow,
+            'sideWindow' => 'add',
         ];
     }
 }

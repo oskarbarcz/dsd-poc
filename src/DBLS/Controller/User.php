@@ -147,8 +147,8 @@ class User
 
         // database query
         $data = $this->_db->select('accounts', [
-            '[>]railcompanies' => [
-                'companyID' => 'companyID',
+            '[>]carriers' => [
+                'carrierID' => 'carrierID',
             ],
         ], [
             'account' => [
@@ -161,9 +161,9 @@ class User
                 'accountLastLoginTime',
                 'accountRegisterTime',
             ],
-            'company' => [
-                'railcompanies.companyID',
-                'railcompanies.companyName',
+            'carrier' => [
+                'carriers.carrierID',
+                'carriers.carrierName',
                 'accounts.accountWorkStatus',
             ],
         ], [
@@ -186,6 +186,7 @@ class User
 
             // setting user details as class property
             $this->_userData = $data[0];
+
 
             // freeing memory from unnessesary stuff
             $this->_userLogin = null;
