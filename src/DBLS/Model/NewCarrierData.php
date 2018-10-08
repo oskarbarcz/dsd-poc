@@ -19,12 +19,12 @@ class NewCarrierData extends Data implements IValidator
      * @param string $name new carrier name
      * @param string $address new carrier adress
      * @param int $nip new carrier government work id
-     * @param int $regon new carrier limitation id
+     * @param float $regon new carrier limitation id
      * @param string $uic new carrier country
      *
      * @throws \Exception when at least one data is not correct
      */
-    public function __construct(string $name, string $address, int $nip, int $regon, string $uic)
+    public function __construct(string $name, string $address, int $nip, float $regon, string $uic)
     {
         $this->name = $name;
         $this->address = $address;
@@ -76,9 +76,9 @@ class NewCarrierData extends Data implements IValidator
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getREGON(): int
+    public function getREGON(): float
     {
         return $this->regon;
     }

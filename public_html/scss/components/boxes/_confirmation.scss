@@ -1,0 +1,36 @@
+.gui-box {
+    &.gui-confirmation {
+        p {
+            text-align: center;
+        }
+        .gui-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            width: 70%;
+            .link-as-button {
+                @include shadow(1);
+                background: #EAEAEA;
+                border: none;
+                border-bottom: 3px #EC1B2D solid;
+                border-radius: 3px;
+                color: #292929;
+                display: inline-block;
+                margin: 3px;
+                padding: 8px 10px;
+                text-align: center;
+                text-decoration: none;
+                transition: 0.2s ease-in-out;
+                width: 40%;
+                &:hover {
+                    transform: scale(1.05);
+                    @include shadow(2);
+                }
+                &.accent {
+                    background: #EC1B2D;
+                    color: #EAEAEA;
+                }
+            }
+        }
+    }
+}
