@@ -2,11 +2,29 @@
 
 <div class="gui-container">
     {% include "common/heading.twig" %}
-    <div class="gui-box">
+    <section class="gui-box">
         <h2>About application</h2>
-    </div>
-    <div class="gui-box">
+        <p>Digitale Schiene is Deutsche Bahn research project, which will renevue german rails. System manages all
+            traffic, making railway more efficient and relable. System detects latures, organises replacement
+            solutions and allow an easy raporting for cooperators.</p>
+        <div class="contact-details">
+            <img class="logo" src="/img/logos/archi_tektur.png" alt="">
+            <div class="provider">
+                <h3>archi_tektur</h3>
+                <a href="https://www.archi-tektur.pl">www.archi-tektur.pl</a>
+                <a href="mailto:kontakt@archi-tektur.pl">kontakt@archi-tektur.pl</a>
+            </div>
+        </div>
+    </section>
+    <section class="gui-box">
         <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="/panel">
+                    <span class="material-icons">bug_report</span>
+                    <p class="menutext">Environment details</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
             <li>
                 <a class="gui-menu-flatcard" href="/panel">
                     <span class="material-icons">keyboard_arrow_left</span>
@@ -15,7 +33,7 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </section>
     {% include "common/footing.twig" %}
 </div>
 {% include "common/footer.twig" %}
