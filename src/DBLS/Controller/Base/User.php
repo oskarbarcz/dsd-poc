@@ -6,13 +6,13 @@
  * Time: 12:53
  */
 
-namespace DBLS\Controller;
+namespace DBLS\Controller\Base;
 
-use ArchFW\Model\Database;
 use ArchFW\Model\DatabaseFactory;
 use DBLS\Model\LoginData;
 use DBLS\Model\RegisterData;
 use DBLS\Model\RestorePasswordData;
+use Medoo\Medoo;
 
 /**
  * Instantiate this class to log user and manage them. Use static methods to recover access to an account or create
@@ -41,7 +41,7 @@ class User
     protected $_isLogged;
 
     /**
-     * @var Database Holds Database connection
+     * @var Medoo Holds Database connection
      */
     protected $_db;
 

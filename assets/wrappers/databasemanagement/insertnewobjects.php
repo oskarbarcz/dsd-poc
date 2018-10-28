@@ -5,8 +5,6 @@ use DBLS\Controller\Maintenance\TrackObjectCategory;
 $userData = $_SESSION['User']->getUserData();
 
 $TrackObjectCategory = new TrackObjectCategory();
-print_r($TrackObjectCategory->readAll());
-die;
 return [
     // Account box data
     'account' => [
@@ -16,5 +14,6 @@ return [
         'carrier'    => $userData['carrier']['carrierName'],
         'workStatus' => ucfirst($userData['carrier']['accountWorkStatus']),
     ],
+    // Types of objects for select box
     'types'   => $TrackObjectCategory->readAll(),
 ];
