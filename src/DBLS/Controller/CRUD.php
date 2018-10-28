@@ -8,16 +8,20 @@
 
 namespace DBLS\Controller;
 
-
+/**
+ * CRUD system to make create, read, update and delete operations over collections
+ *
+ * @package DBLS\Controller
+ */
 abstract class CRUD
 {
     /**
      * Method to read an element in collection
      *
      * @param integer $id
-     * @return bool true if success, false on fail
+     * @return array with data
      */
-    abstract public function read(int $id): bool;
+    abstract public function read(int $id): array;
 
     /**
      * Method to read all elements in collection

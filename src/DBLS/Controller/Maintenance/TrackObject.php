@@ -50,11 +50,27 @@ class TrackObject extends CRUD
      * Method to read an element in collection
      *
      * @param integer $id
-     * @return bool true if success, false on fail
+     * @return array true if success, false on fail
      */
-    public function read($id): bool
+    public function read($id): array
     {
-        // TODO: Implement read() method.
+        return $this->db->debug()->select('trackobjects', [
+            '[>]objecttypes' => [
+                'objectTypeID' => 'objectTypeID',
+            ],
+        ], [
+            'trackobjects.objectID',
+            'trackobjects.objectTypeID',
+            'trackobjects.objectRouteID',
+            'trackobjects.objectName',
+            'trackobjects.objectKilometer',
+            'css' => [
+                'objecttypes.objectTypeID',
+                'objecttypes.objectTypeCSS',
+
+            ],
+        ], ['objectID' => $id]);
+
     }
 
     /**
