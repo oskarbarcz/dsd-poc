@@ -8,8 +8,8 @@ if (!isset($_SESSION['User']) or !$_SESSION['User']->isLogged()) {
 
 $userData = $_SESSION['User']->getUserData();
 return [
+    // Account box data
     'account' => [
-        // Set datas on Profile box
         'name'       => $userData['account']['accountName'],
         'surname'    => $userData['account']['accountSurname'],
         'login'      => $userData['account']['accountLogin'],
