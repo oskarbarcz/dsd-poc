@@ -18,12 +18,8 @@
 return [
     # Here enter database details, if you want to use our extention.
     'databaseType' => 'mysql',
-    'databaseName' => 'test',
-    'server'       => 'localhost',
+    'databaseName' => 'dbls',
+    'server'       => '127.0.0.1',
     'user'         => 'root',
     'password'     => '',
-    // additional PDO options - UTF8 by default
-    'addInfo'      => [
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-    ],
 ];

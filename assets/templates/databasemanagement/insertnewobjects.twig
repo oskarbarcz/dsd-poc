@@ -7,13 +7,17 @@
 
     <section class="gui-box">
         <h2>Add object to track</h2>
-        <form action="" class="gui-form">
-            <label for=""></label>
-            <input type="text" name="" id="" placeholder="">
-            <label for=""></label>
-            <input type="text" name="" id="" placeholder="">
-            <label for=""></label>
-            <input type="text" name="" id="" placeholder="">
+        <form action="addobj" class="gui-form">
+            <label for="name">Object Name</label>
+            <input type="text" name="name" id="name" placeholder="up to 64 chars" required>
+            <label for="kilometer">Kilometer</label>
+            <input type="number" step="0.1" name="kilometer" id="kilometer" placeholder="kilometer">
+            <label for="type">Object type</label>
+            <select name="type" id="type" required>
+                {% for type in types %}
+                    <option value="{{type.objectTypeID}}">{{type.objectTypeName}}</option>
+                {% endfor %}
+            </select>
             <label for=""></label>
             <input type="text" name="" id="" placeholder="">
             <label for=""></label>

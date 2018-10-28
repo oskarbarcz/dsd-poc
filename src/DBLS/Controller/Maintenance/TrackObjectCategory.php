@@ -40,9 +40,9 @@ class TrackObjectCategory extends CRUD
      * Method to read an element in collection
      *
      * @param integer $id
-     * @return bool true if success, false on fail
+     * @return array collection of all items
      */
-    public function read($id): bool
+    public function read($id): array
     {
         // TODO: Implement read() method.
     }
@@ -57,7 +57,7 @@ class TrackObjectCategory extends CRUD
         return $this->db->select('objecttypes', [
             'objectTypeID',
             'objectTypeName',
-            'objecTypeCSS',
+            'objectTypeCSS',
         ]);
     }
 
