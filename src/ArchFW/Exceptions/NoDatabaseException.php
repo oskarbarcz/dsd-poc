@@ -15,22 +15,16 @@
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
-namespace ArchFW\Base;
 
+namespace ArchFW\Exceptions;
+
+use Exception;
 
 /**
- * Abstract controller class that is creating Database connection object on creation and destroys it on object dissapearing.
+ * NoDatabaseException is thrown when database cannot be reached or datas are wrong.
+ *
+ * @package ArchFW\Exceptions
  */
-abstract class Controller
+class NoDatabaseException extends Exception
 {
-
-    public function __construct()
-    {
-    }
-
-    public function __wakeup()
-    {
-
-    }
-
 }

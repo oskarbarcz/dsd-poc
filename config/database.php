@@ -15,22 +15,15 @@
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
-namespace ArchFW\Base;
-
-
-/**
- * Abstract controller class that is creating Database connection object on creation and destroys it on object dissapearing.
- */
-abstract class Controller
-{
-
-    public function __construct()
-    {
-    }
-
-    public function __wakeup()
-    {
-
-    }
-
-}
+return [
+    # Here enter database details, if you want to use our extention.
+    'databaseType' => 'mysql',
+    'databaseName' => 'test',
+    'server'       => 'localhost',
+    'user'         => 'root',
+    'password'     => '',
+    // additional PDO options - UTF8 by default
+    'addInfo'      => [
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+    ],
+];
