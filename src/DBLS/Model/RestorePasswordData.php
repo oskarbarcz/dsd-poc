@@ -9,9 +9,9 @@
 namespace DBLS\Model;
 
 
-use DBLS\Interfaces\IValidator;
+use DBLS\Interfaces\ValidateInterface;
 
-class RestorePasswordData extends Data implements IValidator
+class RestorePasswordData extends Data implements ValidateInterface
 {
     public function validate(): bool
     {

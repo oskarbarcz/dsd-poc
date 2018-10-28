@@ -15,7 +15,7 @@ use Exception;
  *
  * @package PasswordManager\Controller
  */
-interface IValidator
+interface ValidateInterface
 {
     /**
      * Validates fully entered data

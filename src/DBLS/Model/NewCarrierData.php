@@ -2,10 +2,10 @@
 
 namespace DBLS\Model;
 
-use DBLS\Interfaces\IValidator;
+use DBLS\Interfaces\ValidateInterface;
 use Exception;
 
-class NewCarrierData extends Data implements IValidator
+class NewCarrierData extends Data implements ValidateInterface
 {
     private $name;
     private $address;
