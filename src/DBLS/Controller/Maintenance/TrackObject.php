@@ -3,15 +3,15 @@
 namespace DBLS\Controller\Maintenance;
 
 use ArchFW\Model\DatabaseFactory;
-use DBLS\Interfaces\CRUDInterface;
-use DBLS\Interfaces\ValidateInterface;
+use DBLS\Controller\CRUD;
+use DBLS\Model\TrackObjectData;
 
 /**
  * Class used to manage track objects
  *
  * @package DBLS\Controller\Maintenance
  */
-class TrackObject implements CRUDInterface
+class TrackObject extends CRUD
 {
     /**
      * @var \Medoo\Medoo Database holder
@@ -26,11 +26,23 @@ class TrackObject implements CRUDInterface
     /**
      * Method to create an element in collection
      *
-     * @param ValidateInterface $data
+     * @param TrackObjectData $data
      * @return bool true if success, false on fail
      */
-    public function create(ValidateInterface $data): bool
+    public function create(TrackObjectData $data): bool
     {
+        $result = $this->db->insert('trackobjects', [
+            'objectID'        => null,
+            'objectTypeID'    => $data->getTypeID(),
+            'objectRouteID'   => $data->getRouteID(),
+            'objectName'      => $data->getName(),
+            'objectKilometer' => $data->getKilometer(),
+        ]);
+        if ($result->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
@@ -54,17 +66,6 @@ class TrackObject implements CRUDInterface
     {
         // TODO: Implement readAll() method.
         return [];
-    }
-
-    /**
-     * Method to update an element in collection
-     *
-     * @param integer $id
-     * @return bool true if success, false on fail
-     */
-    public function update(int $id): bool
-    {
-        // TODO: Implement update() method.
     }
 
     /**

@@ -3,9 +3,14 @@
 namespace DBLS\Model;
 
 
+use DBLS\Exceptions\ValidateException;
 use DBLS\Interfaces\ValidateInterface;
-use Exception;
 
+/**
+ * Dependiency injection class holding new track object data
+ *
+ * @package DBLS\Model
+ */
 class TrackObjectData extends Data implements ValidateInterface
 {
 
@@ -37,6 +42,7 @@ class TrackObjectData extends Data implements ValidateInterface
      * @param int $routeID
      * @param string $name
      * @param int $kilometer
+     * @throws ValidateException on validation fail
      */
     public function __construct(int $typeID, int $routeID, string $name, int $kilometer)
     {
@@ -44,18 +50,22 @@ class TrackObjectData extends Data implements ValidateInterface
         $this->routeID = $routeID;
         $this->name = $name;
         $this->kilometer = $kilometer;
+
+        $this->validate();
     }
 
     /**
      * Validates fully entered data
      *
      * @return bool true if everything went OK while verifying
-     * @throws Exception when given data are not valid
+     * @throws ValidateException when given data are not valid
      */
     public function validate(): bool
     {
         if (strlen($this->name) > 64) {
-            throw new
+            throw new ValidateException('Name is too long!', 1100);
+        } else {
+            return true;
         }
     }
 

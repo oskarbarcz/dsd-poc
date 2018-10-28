@@ -31,6 +31,7 @@ return [
         '/maintenance'       => 'maintenance/panel',
         '/profiles'          => 'profilesmanagement/profiles',
         '/carriers'          => 'profilesmanagement/carriers',
+        '/addobj'            => 'databasemanagement/insertnewobjects',
         '/drive'             => 'drive',
         '/about'             => 'about',
         '/logoff'            => 'login/logoff',
