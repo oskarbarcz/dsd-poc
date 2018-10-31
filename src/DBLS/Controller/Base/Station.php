@@ -10,6 +10,7 @@ namespace DBLS\Controller\Base;
 
 
 use ArchFW\Model\DatabaseFactory;
+use DBLS\Exceptions\StationErrorException;
 
 /**
  * Class Station for station things
@@ -23,20 +24,31 @@ class Station
      */
     private $db;
 
-    public function __construct()
+    /**
+     * @var integer Holds assigned route identifier
+     */
+    private $routeID;
+
+    /**
+     * Creates a line station manager
+     *
+     * @param int $routeID assinged line ID
+     */
+    public function __construct(int $routeID)
     {
         $this->db = DatabaseFactory::getInstance();
+        $this->routeID = $routeID;
     }
 
     /**
      * Get all stations along the selected track
      *
-     * @param string $routeID ID of track
      * @param int $from start station
      * @param int $to stop station
      * @return array list of stations
+     * @throws StationErrorException when error occures
      */
-    public function getStationListByRoute(string $routeID, int $from, int $to): array
+    public function getStationList(int $from, int $to): array
     {
         // define SQL value for direction
         $order = ($to > $from) ? 'ASC' : 'DESC';
@@ -46,7 +58,7 @@ class Station
 
         // if user specified road between the same station
         if ($to == $from) {
-            return [];
+            throw new StationErrorException('Departure and arrival stations are the same', 101);
         }
         // query
         $result = $this->db->select('stations', [
@@ -57,12 +69,21 @@ class Station
             'stationShort',
             'stationFID',
         ], [
-            'routeID[=]'       => $routeID,
+            'routeID[=]'       => $this->routeID,
             'stationOrder[<>]' => $arr,
             'ORDER'            => ['stationOrder' => $order],
         ]);
 
+        if (!$result) {
+            throw new StationErrorException('There are no stops on this road, on selected sector.', 102);
+        }
+
         return $result;
+    }
+
+    public function generateStopList()
+    {
+
     }
 
 }
