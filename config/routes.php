@@ -42,5 +42,6 @@ return [
         '/test'        => 'test',
         '/routercheck' => 'routercheck',
         '/auth'        => 'auth',
+        '/stationlist' => 'stationlist',
     ],
 ];

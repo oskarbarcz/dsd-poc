@@ -38,6 +38,7 @@ final class DatabaseFactory
             'server'        => CONFIG['database']['server'],
             'username'      => CONFIG['database']['user'],
             'password'      => CONFIG['database']['password'],
+            'charset'       => 'utf8mb4',
         ]);
     }
 }
