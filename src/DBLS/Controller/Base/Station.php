@@ -48,7 +48,7 @@ class Station
      * @return array list of stations
      * @throws StationErrorException when error occures or empty array has to be returned
      */
-    public function getStationList(int $from, int $to): array
+    public function getAllStationList(int $from, int $to): array
     {
         // define SQL value for direction
         $order = ($to > $from) ? 'ASC' : 'DESC';
@@ -80,11 +80,6 @@ class Station
         } else {
             throw new StationErrorException('There are no stations on this road, on selected sector.', 102);
         }
-    }
-
-    public function generateStopList()
-    {
-
     }
 
 }
