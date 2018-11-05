@@ -46,7 +46,7 @@ class Station
      * @param int $from start station
      * @param int $to stop station
      * @return array list of stations
-     * @throws StationErrorException when error occures
+     * @throws StationErrorException when error occures or empty array has to be returned
      */
     public function getStationList(int $from, int $to): array
     {
@@ -74,11 +74,12 @@ class Station
             'ORDER'            => ['stationOrder' => $order],
         ]);
 
-        if (!$result) {
-            throw new StationErrorException('There are no stops on this road, on selected sector.', 102);
+        // throw an Exception when array is empty
+        if ($result) {
+            return $result;
+        } else {
+            throw new StationErrorException('There are no stations on this road, on selected sector.', 102);
         }
-
-        return $result;
     }
 
     public function generateStopList()
