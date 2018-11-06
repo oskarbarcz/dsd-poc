@@ -95,7 +95,6 @@ class Station
     {
 // define SQL value for direction
         $order = ($to > $from) ? 'ASC' : 'DESC';
-
         // change order of values in between form
         $arr = ($to > $from) ? [$from, $to] : [$to, $from];
 
@@ -126,8 +125,11 @@ class Station
         // throw an Exception when array is empty
         if ($result) {
             if ($result[0]['stationOrder'] != $from) {
+
                 throw new StationErrorException('This service can\'t start on selected station.', 103);
             } elseif ($result[count($result) - 1]['stationOrder'] != $to) {
+                echo $result[count($result) - 1]['stationOrder'];
+                echo $to;
                 throw new StationErrorException('This service can\'t stop on selected station.', 104);
             }
             return $result;

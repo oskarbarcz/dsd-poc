@@ -11,6 +11,7 @@ namespace DBLS\Controller\Base;
 
 use ArchFW\Model\DatabaseFactory;
 use DBLS\Exceptions\StationErrorException;
+use DBLS\Exceptions\TimetableException;
 use DBLS\Model\TimetableData;
 
 /**
@@ -20,15 +21,8 @@ use DBLS\Model\TimetableData;
  */
 class TimetableGenerator
 {
-    /**
-     * Holds train categories
-     */
-    const CATEGORY_SBAHN = 'sbahn';
-    const CATEGORY_RB = 'rb';
-    const CATEGORY_RE = 're';
-    const CATEGORY_IC = 'ic';
-    const CATEGORY_ICE = 'ice';
-    const CATEGORY_RJ = 'rj';
+
+    const TIME_ON_STOP_IC = 2;
 
     /**
      * @var \Medoo\Medoo Database link
@@ -59,45 +53,70 @@ class TimetableGenerator
     }
 
     /**
+     * Generates fully-built timetable
      *
+     * @return TimetableSession fully built timetable
+     * @throws TimetableException
      */
-    public function generate()
+    public function getSession(): TimetableSession
     {
-        // TODO:
-        // add random delay on start to make it more real
-        $randomDelay = $this->randomDelay(5);
         // for each step add time
-        $startTime = $this->tempData->getStartTime();
+        $startTime = strtotime($this->tempData->getStartTime());
         try {
 
             // collect list of stations where the train stops
             $stationList = $this->Station->getStationListByService($this->tempData->getStart(),
                 $this->tempData->getFinish(), $this->tempData->getServiceCategory());
-            return $stationList;
-            /*
-             * TODO
-             *
-            FOR EACH RECORD IN DATABASE TRY TO FIND FROM 1 TO 2, IF EXIST THEN FROM 2 TO 3, IF DOES NOT EXIST
-            THEN FROM 1 TO 3 ETC
-            die;
 
-            $timetable[$key]['arrivalTime'] = '12:00';
-            $timetable[$key]['departureTime'] = '12:01';
-            $timetable[$key]['stationName'] = $value['stationName'];
+            // initiate an timetable
+            $Timetable = new TimetableSession("");
 
-            return $timetable;
+            $arrivalTime = date('H:i', $startTime);
+            $departureTimeDelta = $startTime + 4 * 60;
 
-            */
+            // set start station details
+            $Timetable->append([
+                'arriveTime'    => $arrivalTime,
+                'departureTime' => $timetable[0]['departureTime'] = date('H:i', $departureTimeDelta),
+                'stationName'   => $stationList[0]['stationName'],
+            ]);
+
+            for ($iterator = 0; $iterator < count($stationList) - 1; $iterator++) {
+                // on each iteration add each station details
+                $Timetable->append([
+                    'arriveTime'    => date("H:i",
+                        $departureTimeDelta += $this->getTime($stationList[$iterator]['stationID'],
+                            $stationList[$iterator + 1]['stationID'])),
+                    'departureTime' => date("H:i", $departureTimeDelta += $this->countStopTime()),
+                    'stationName'   => $stationList[$iterator + 1]['stationName'],
+                ]);
+            }
+
+            $Timetable->setReady();
+            return $Timetable;
         } catch (StationErrorException $e) {
             echo $e->getMessage();
         }
-
-
+        // in case something broken
+        return null;
     }
 
-    private function randomDelay(int $about): int
+    /**
+     * Determine stop on station time by train category
+     *
+     * @return int time in seconds
+     */
+    private function countStopTime(): int
     {
-        return 5;
+        switch ($this->tempData->getServiceCategory()) {
+            // InterCity
+            case 1:
+                return self::TIME_ON_STOP_IC * 60;
+            default:
+                return 30;
+        }
+
+
     }
 
     /**
@@ -105,10 +124,9 @@ class TimetableGenerator
      *
      * @param int $from
      * @param int $to
-     * @param string $service
-     * @return int positive value on success, -1 on fail
+     * @return int positive value on success, -1 on fail, time in seconds
      */
-    private function getTime(int $from, int $to, string $service): int
+    private function getTime(int $from, int $to): int
     {
         $result = $this->db->get('distances', [
             'time',
@@ -116,12 +134,12 @@ class TimetableGenerator
             'AND' => [
                 'fromStationID[=]' => $from,
                 'toStationID[=]'   => $to,
-                'serviceID[=]'     => $service,
+                'serviceID[=]'     => $this->tempData->getServiceCategory(),
             ],
         ]);
-
         if ($result['time'] > 0) {
-            return $result['time'];
+            // return value in seconds
+            return $result['time'] * 60;
         } else {
             return -1;
         }
