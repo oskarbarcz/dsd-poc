@@ -42,14 +42,26 @@ class TimetableData extends Data implements ValidateInterface
      */
     private $serviceCategory;
 
-    public function __construct(int $start, int $finish, string $startTime, int $routeID, int $serviceCategory)
-    {
+    /**
+     * @var int max speed unit can go
+     */
+    private $maxSpeed;
+
+    public function __construct(
+        int $start,
+        int $finish,
+        string $startTime,
+        int $routeID,
+        int $serviceCategory,
+        int $maxSpeed
+    ) {
         // assign values
         $this->start = $start;
         $this->finish = $finish;
         $this->startTime = $startTime;
         $this->routeID = $routeID;
         $this->serviceCategory = $serviceCategory;
+        $this->maxSpeed = $maxSpeed;
     }
 
     /**
