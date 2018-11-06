@@ -6,11 +6,10 @@
  * Time: 20:00
  */
 
-namespace DBLS\Controller;
+namespace DBLS\Controller\Base;
 
 
 use ArchFW\Model\DatabaseFactory;
-use DBLS\Controller\Base\Station;
 use DBLS\Exceptions\StationErrorException;
 use DBLS\Model\TimetableData;
 
@@ -70,15 +69,27 @@ class TimetableGenerator
         // for each step add time
         $startTime = $this->tempData->getStartTime();
         try {
-            $stationList = $this->Station->getAllStationList($this->tempData->getStart(), $this->tempData->getFinish());
-            $timetable = [];
-            foreach ($stationList as $key => $value) {
-//                $timetable[] = 'TIME:'. $startTime.'STATION: '
 
-            }
+            // collect list of stations where the train stops
+            $stationList = $this->Station->getStationListByService($this->tempData->getStart(),
+                $this->tempData->getFinish(), $this->tempData->getServiceCategory());
+            return $stationList;
+            /*
+             * TODO
+             *
+            FOR EACH RECORD IN DATABASE TRY TO FIND FROM 1 TO 2, IF EXIST THEN FROM 2 TO 3, IF DOES NOT EXIST
+            THEN FROM 1 TO 3 ETC
+            die;
 
+            $timetable[$key]['arrivalTime'] = '12:00';
+            $timetable[$key]['departureTime'] = '12:01';
+            $timetable[$key]['stationName'] = $value['stationName'];
+
+            return $timetable;
+
+            */
         } catch (StationErrorException $e) {
-
+            echo $e->getMessage();
         }
 
 
@@ -86,6 +97,7 @@ class TimetableGenerator
 
     private function randomDelay(int $about): int
     {
+        return 5;
     }
 
     /**

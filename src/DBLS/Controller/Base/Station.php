@@ -48,7 +48,7 @@ class Station
      * @return array list of stations
      * @throws StationErrorException when error occures or empty array has to be returned
      */
-    public function getAllStationList(int $from, int $to): array
+    public function getStationList(int $from, int $to): array
     {
         // define SQL value for direction
         $order = ($to > $from) ? 'ASC' : 'DESC';
@@ -76,6 +76,60 @@ class Station
 
         // throw an Exception when array is empty
         if ($result) {
+            return $result;
+        } else {
+            throw new StationErrorException('There are no stations on this road, on selected sector.', 102);
+        }
+    }
+
+    /**
+     * Get all stations along the selected track where the city of $serviceID stops
+     *
+     * @param int $from start station
+     * @param int $to stop station
+     * @param int $serviceID train service category
+     * @return array list of stations
+     * @throws StationErrorException when error occures or empty array has to be returned
+     */
+    public function getStationListByService(int $from, int $to, int $serviceID): array
+    {
+// define SQL value for direction
+        $order = ($to > $from) ? 'ASC' : 'DESC';
+
+        // change order of values in between form
+        $arr = ($to > $from) ? [$from, $to] : [$to, $from];
+
+        // if user specified road between the same station
+        if ($to == $from) {
+            throw new StationErrorException('Departure and arrival stations are the same', 101);
+        }
+
+        $slug = "%[{$serviceID}]%";
+
+        // query
+        $result = $this->db->select('stations', [
+            'stationID',
+            'routeID',
+            'stationOrder',
+            'stationName',
+            'stationShort',
+            'stationFID',
+        ], [
+            'AND'   => [
+                'routeID[=]'         => $this->routeID,
+                'stationOrder[<>]'   => $arr,
+                'stationServices[~]' => $slug,
+            ],
+            'ORDER' => ['stationOrder' => $order],
+        ]);
+
+        // throw an Exception when array is empty
+        if ($result) {
+            if ($result[0]['stationOrder'] != $from) {
+                throw new StationErrorException('This service can\'t start on selected station.', 103);
+            } elseif ($result[count($result) - 1]['stationOrder'] != $to) {
+                throw new StationErrorException('This service can\'t stop on selected station.', 104);
+            }
             return $result;
         } else {
             throw new StationErrorException('There are no stations on this road, on selected sector.', 102);

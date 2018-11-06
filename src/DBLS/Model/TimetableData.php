@@ -17,7 +17,7 @@ class TimetableData
     private $routeID;
     private $serviceCategory;
 
-    public function __construct(int $start, int $finish, int $startTime, int $routeID, string $serviceCategory)
+    public function __construct(int $start, int $finish, string $startTime, int $routeID, int $serviceCategory)
     {
         $this->start = $start;
         $this->finish = $finish;
@@ -43,9 +43,9 @@ class TimetableData
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getStartTime(): int
+    public function getStartTime(): string
     {
         return $this->startTime;
     }
@@ -59,9 +59,9 @@ class TimetableData
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getServiceCategory(): string
+    public function getServiceCategory(): int
     {
         return $this->serviceCategory;
     }
