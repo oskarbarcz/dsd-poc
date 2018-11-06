@@ -8,17 +8,43 @@
 
 namespace DBLS\Model;
 
+use DBLS\Interfaces\ValidateInterface;
 
-class TimetableData
+/**
+ * Class TimetableData injects dependiencies to Timetable Generator
+ *
+ * @package DBLS\Model
+ */
+class TimetableData extends Data implements ValidateInterface
 {
+    /**
+     * @var int holds ID of start station
+     */
     private $start;
+
+    /**
+     * @var int holds ID of finish station
+     */
     private $finish;
+
+    /**
+     * @var string holds start time in H:i format
+     */
     private $startTime;
+
+    /**
+     * @var int Holds assigned routeID
+     */
     private $routeID;
+
+    /**
+     * @var int Holds service category ID (eg. IC -> 1, etc)
+     */
     private $serviceCategory;
 
     public function __construct(int $start, int $finish, string $startTime, int $routeID, int $serviceCategory)
     {
+        // assign values
         $this->start = $start;
         $this->finish = $finish;
         $this->startTime = $startTime;
@@ -64,5 +90,10 @@ class TimetableData
     public function getServiceCategory(): int
     {
         return $this->serviceCategory;
+    }
+
+    public function validate(): bool
+    {
+
     }
 }
