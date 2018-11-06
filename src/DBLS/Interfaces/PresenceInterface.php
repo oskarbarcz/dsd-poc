@@ -9,7 +9,7 @@
 namespace DBLS\Interfaces;
 
 /**
- * Interface PresenceInterface implements methods used to
+ * Interface PresenceInterface implements methods used to check if database has representation of element with given ID
  *
  * @package DBLS\Interfaces
  */

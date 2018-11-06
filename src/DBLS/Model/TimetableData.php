@@ -104,6 +104,15 @@ class TimetableData extends Data implements ValidateInterface
         return $this->serviceCategory;
     }
 
+    /**
+     * @return int
+     */
+    public function getMaxSpeed(): int
+    {
+        return $this->maxSpeed;
+    }
+
+
     public function validate(): bool
     {
 
