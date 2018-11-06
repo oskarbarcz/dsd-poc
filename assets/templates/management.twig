@@ -1,0 +1,79 @@
+{% include "common/header.twig" %}
+
+<div class="gui-container">
+
+    {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
+
+    <section class="gui-box">
+        <h2>Management</h2>
+        <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="/carriers">
+                    <span class="material-icons">card_travel</span>
+                    <p class="menutext">Carriers</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">dashboard</span>
+                    <p class="menutext">Object types</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">map</span>
+                    <p class="menutext">Routes</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">explore</span>
+                    <p class="menutext">Services</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">train</span>
+                    <p class="menutext">Stations</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="/addobj">
+                    <span class="material-icons">view_list</span>
+                    <p class="menutext">Track objects</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="/profiles">
+                    <span class="material-icons">account_circle</span>
+                    <p class="menutext">Accounts</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="">
+                    <span class="material-icons">trending_flat</span>
+                    <p class="menutext">Distances</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard last" href="/panel">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p class="menutext">Back to applications</p>
+                    <span class="material-icons">apps</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    {% include "common/footing.twig" %}
+</div>
+{% include "common/footer.twig" %}
