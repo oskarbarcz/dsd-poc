@@ -1,0 +1,24 @@
+.route-menu {
+    &-list {
+        .route-menu-element {
+            @include shadow(1);
+            align-items: center;
+            background-color: #EAEAEA;
+            border-bottom: #EAEAEA solid 3px;
+            color: #444444;
+            display: flex;
+            font-size: 14px;
+            justify-content: center;
+            margin: 5px auto;
+            padding: 8px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            width: 280px;
+            &:hover {
+                @include shadow(2);
+                border-bottom: #EC1B2D solid 3px;
+            }
+        }
+    }
+}

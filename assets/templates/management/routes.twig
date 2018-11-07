@@ -2,10 +2,45 @@
 
 <div class="gui-container">
     {% include "common/heading.twig" %}
+    {% include "common/gui-user.twig" %}
     <section class="gui-box">
         <h2>Routes management</h2>
+        <p>Choose route from list to see its details, edit or delete it.</p>
+        <div class="route-menu">
+            <ul class="route-menu-list">
+                {% for route in routes %}
+                    <li>
+                        <a href="/routesmanagement/{{route.routeID}}"
+                           class="route-menu-element">{{route.fullName}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <section class="gui-box">
+        <ul class="gui-box-menu">
+            <li>
+                <a class="gui-menu-flatcard" href="/routesmanagement/add">
+                    <span class="material-icons">add_circle</span>
+                    <p class="menutext">Add new route</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+            </li>
+            <li>
+                <a class="gui-menu-flatcard" href="/panel">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p class="menutext">Back to management</p>
+                    <span class="material-icons">build</span>
+                </a>
+            </li>
+        </ul>
     </section>
     {% include "common/footing.twig" %}
+</div>
+<div class="gui-container">
+    <div class="gui-box">
+        <h2>Route details</h2>
+    </div>
 </div>
 
 {% include "common/footer.twig" %}
