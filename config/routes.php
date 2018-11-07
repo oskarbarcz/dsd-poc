@@ -23,6 +23,7 @@ return [
         '/login'             => 'login/login',
         '/panel'             => 'panel',
         '/management'        => 'management',
+        '/routesmanagement'  => 'management/routes',
         '/serviceplanner'    => 'serviceplanner/serviceplanner',
         '/startslot'         => 'serviceplanner/startslot',
         '/addslot'           => 'serviceplanner/addslot',
