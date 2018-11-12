@@ -1,0 +1,26 @@
+.gui-box {
+    &.gui-creator {
+        .rejection {
+            .material-icons {
+                color: #666666;
+                display: block;
+                font-size: 80px;
+                margin: 10px 0;
+                text-align: center;
+            }
+            .message {
+                color: #666666;
+                display: block;
+                font-size: 20px;
+                margin: 0 auto;
+                text-align: center;
+
+            }
+            p {
+                color: #666666;
+                padding-bottom: 20px;
+                text-align: justify;
+            }
+        }
+    }
+}

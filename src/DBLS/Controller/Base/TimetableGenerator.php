@@ -39,11 +39,6 @@ class TimetableGenerator
      */
     private $tempData;
 
-    /**
-     * @var array Holds stations along the way
-     */
-    private $stationList;
-
     public function __construct(TimetableData $data)
     {
         $this->tempData = $data;

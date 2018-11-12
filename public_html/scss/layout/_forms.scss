@@ -22,7 +22,8 @@
             user-select: none;
         }
         input,
-        select {
+        select,
+        button {
             background-color: #EAEAEA;
             border: none;
             border-bottom: 3px #EAEAEA solid;
@@ -134,10 +135,12 @@
         }
         .submit {
             background-color: #EAEAEA;
-            border-bottom: 3px #EAEAEA solid;
+            border-bottom: 3px #EC1B2D solid;
             color: #292929;
+            position: relative;
             &:hover {
                 background-color: #EAEAEA;
+                color: #EC1B2D;
                 border: none;
                 border-bottom: 3px #EC1B2D solid;
                 @include shadow(2);

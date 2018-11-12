@@ -2,29 +2,49 @@
 
 <div class="gui-container">
     {% include "common/heading.twig" %}
-    <section class="gui-box">
-        <h2>About application</h2>
-        <p>Digitale Schiene is Deutsche Bahn research project, which will renevue german rails. System manages all
-            traffic, making railway more efficient and relable. System detects latures, organises replacement
-            solutions and allow an easy raporting for cooperators.</p>
-        <div class="contact-details">
-            <img class="logo" src="/img/logos/archi_tektur.png" alt="">
-            <div class="provider">
-                <h3>archi_tektur</h3>
-                <a href="https://www.archi-tektur.pl">www.archi-tektur.pl</a>
-                <a href="mailto:kontakt@archi-tektur.pl">kontakt@archi-tektur.pl</a>
+    {% if window == 'basic' %}
+        <section class="gui-box">
+            <h2>About application</h2>
+            <p>Digitale Schiene is Deutsche Bahn research project, which will renevue german rails. System manages all
+                traffic, making railway more efficient and relable. System detects latures, organises replacement
+                solutions and allow an easy raporting for cooperators.</p>
+            <div class="contact-details">
+                <img class="logo" src="/img/logos/archi_tektur.png" alt="">
+                <div class="provider">
+                    <h3>archi_tektur</h3>
+                    <a href="https://www.archi-tektur.pl">www.archi-tektur.pl</a>
+                    <a href="mailto:kontakt@archi-tektur.pl">kontakt@archi-tektur.pl</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
+    {% if window == 'advanced' %}
+        <section class="gui-box">
+            <h2>Technical details</h2>
+            <p>
+                <span class="newline">Production mode is {{devmode}}.</span>
+                <span class="newline">Server IP: {{ip}}, port: {{port}}</span>
+                <span class="newline">Server software: {{software}}</span>
+                <span class="newline">Protocol: {{protocol}}</span>
+                <span class="newline">Database driver: {{database.driver}}</span>
+                <span class="newline">Database version: {{database.version}}</span>
+                <span class="newline">Database protocol: {{database.connection}}</span>
+                <span class="newline">Database server details: {{database.server}}</span>
+            </p>
+        </section>
+    {% endif %}
+
     <section class="gui-box">
         <ul class="gui-box-menu">
-            <li>
-                <a class="gui-menu-flatcard" href="/environment">
-                    <span class="material-icons">bug_report</span>
-                    <p class="menutext">Environment details</p>
-                    <span class="material-icons">keyboard_arrow_right</span>
-                </a>
-            </li>
+            {% if window == 'basic' %}
+                <li>
+                    <a class="gui-menu-flatcard" href="/about/environment">
+                        <span class="material-icons">bug_report</span>
+                        <p class="menutext">Environment details</p>
+                        <span class="material-icons">keyboard_arrow_right</span>
+                    </a>
+                </li>
+            {% endif %}
             <li>
                 <a class="gui-menu-flatcard" href="/panel">
                     <span class="material-icons">keyboard_arrow_left</span>

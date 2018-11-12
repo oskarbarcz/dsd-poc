@@ -35,12 +35,33 @@
             </li>
         </ul>
     </section>
+    {% if good %}
+        <section class="gui-box gui-success">
+            <p>Route added successfully!</p>
+        </section>
+    {% endif %}
     {% include "common/footing.twig" %}
 </div>
-<div class="gui-container">
-    <div class="gui-box">
-        <h2>Route details</h2>
+
+{% if window == 'add' %}
+    <div class="gui-container">
+        <div class="gui-box">
+            <h2>Add route</h2>
+            <p>Add an existing route to the system. Provide valid KBS number, route name, length and Vmax.</p>
+            <form action="/routesmanagement/add" class="gui-form" method="post">
+                <label for="kbs">KBS number</label>
+                <input type="text" id="kbs" name="kbs" required>
+                <label for="name">Route name</label>
+                <input type="text" id="name" name="name" required>
+                <label for="length">Length</label>
+                <input type="number" id="length" name="length" required>
+                <label for="maxspeed">Maximal allowed speed</label>
+                <input type="number" id="maxspeed" name="maxspeed" required>
+                <input type="submit" name="submit_add" value="Add">
+            </form>
+        </div>
     </div>
-</div>
+{% endif %}
+
 
 {% include "common/footer.twig" %}

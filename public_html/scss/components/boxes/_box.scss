@@ -32,6 +32,11 @@
             letter-spacing: 0;
             padding: 5px;
             text-align: justify;
+            .newline {
+                display: block;
+                margin: 0;
+                padding: 0;
+            }
         }
     }
 }

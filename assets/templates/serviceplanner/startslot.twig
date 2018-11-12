@@ -3,19 +3,41 @@
 <div class="gui-container">
 
     {% include "common/heading.twig" %}
-    {% include "common/gui-user.twig" %}
-    <section class="gui-box">
-        <h2>Start slot</h2>
-        <p>Starts driving panel. Enter below train linear ID or refID (Reference ID on Agreement from DB
-            Trafficzentrum). A soon as You will click the start button, application will start ride session. Enter your
-            slot only before the ride.</p>
+    {#{% include "common/gui-user.twig" %}#}
+    <section class="gui-box gui-stage">
+        <ul class="stage-container">
+            <li><a class="stage-element done" href="">1</a></li>
+            <li><a class="stage-element actual" href="">2</a></li>
+            <li><a class="stage-element" href="">3</a></li>
+            <li><a class="stage-element" href="">4</a></li>
+            <li><a class="stage-element" href="">5</a></li>
+        </ul>
+    </section>
+    <section class="gui-box gui-creator">
+        <h2>Slot creator</h2>
         <form class="gui-form" action="startslot">
-            <div class="gui-form-element">
-                <input type="text" placeholder="trainID" name="trainID" id="trainID">
-                <input type="text" placeholder="refID" name="docID" id="docID">
-            </div>
-            <input class="submit" type="submit" value="start">
+            <label for="stationStart">Choose start station</label>
+            <select name="stationStart" id="stationStart">
+                <option value="0">Koblenz Hbf</option>
+                <option value="0">Berlin Gesundbr</option>
+                <option value="0">Frankfurt (M) Hbf</option>
+            </select>
+            <label for="stationFinish">Choose final station</label>
+            <select name="stationFinish" id="stationFinish">
+                <option value="0">Koblenz Hbf</option>
+                <option value="0">Berlin Gesundbr</option>
+                <option value="0">Frankfurt (M) Hbf</option>
+            </select>
+            <label for="serviceID">Choose service category</label>
+            <select name="serviceID" id="serviceID">
+                <option value="0">InterCity</option>
+                <option value="0">InterCity Express</option>
+                <option value="0">Regional Bahn</option>
+            </select>
+            <input type="submit" class="submit" value="Next stage" name="submit_stage1">
         </form>
+    </section>
+    <section class="gui-box">
         <div class="gui-box-menu">
             <a class="gui-menu-flatcard" href="requestslot">
                 <span class="material-icons">add_circle_outline</span>
@@ -29,9 +51,87 @@
             </a>
         </div>
     </section>
-    <section class="gui-box gui-warning">
-        <p>Typical error message</p>
-    </section>
+
+    {# ODRZUCENIE #}
+    {% if rejection %}
+        <section class="gui-box gui-stage">
+            <ul class="stage-container">
+                <li><a class="stage-element done" href="">1</a></li>
+                <li><a class="stage-element actual" href="">2</a></li>
+                <li><a class="stage-element" href="">3</a></li>
+                <li><a class="stage-element" href="">4</a></li>
+                <li><a class="stage-element" href="">5</a></li>
+            </ul>
+        </section>
+        <section class="gui-box gui-creator">
+            <div class="rejection">
+                <span class="material-icons">close</span>
+                <span class="message">No routes found.</span>
+                <p>Your profile has no access to any route yet. Gain access to them by asking your supervisor to enable
+                    them.</p>
+            </div>
+        </section>
+        <section class="gui-box">
+            <div class="gui-box-menu">
+                <a class="gui-menu-flatcard" href="requestslot">
+                    <span class="material-icons">add_circle_outline</span>
+                    <p class="menutext">Request slot</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+                <a class="gui-menu-flatcard" href="serviceplanner">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p class="menutext">Back to Service Planner</p>
+                    <span class="material-icons">apps</span>
+                </a>
+            </div>
+        </section>
+    {% endif %}
+
+    {# KROK 1 #}
+    {% if la %}
+        <section class="gui-box gui-stage">
+            <ul class="stage-container">
+                <li><a class="stage-element done" href="">1</a></li>
+                <li><a class="stage-element actual" href="">2</a></li>
+                <li><a class="stage-element" href="">3</a></li>
+                <li><a class="stage-element" href="">4</a></li>
+                <li><a class="stage-element" href="">5</a></li>
+            </ul>
+        </section>
+        <section class="gui-box gui-creator">
+            <h2>Slot creator</h2>
+            <form class="gui-form" action="startslot">
+                <label for="routeID">Choose route to create profile</label>
+                <select name="routeID" id="routeID">
+                    <option value="0">Koblenz Hbf - Koln Hbf</option>
+                    <option value="0">Berlin Gesundbr. - Leipzig Hbf</option>
+                    <option value="0">Frankfurt (M) Hbf - Karlsruhe</option>
+                </select>
+                <input type="submit" class="submit" value="Next stage" name="submit_stage1">
+            </form>
+        </section>
+        <section class="gui-box">
+            <div class="gui-box-menu">
+                <a class="gui-menu-flatcard" href="requestslot">
+                    <span class="material-icons">add_circle_outline</span>
+                    <p class="menutext">Request slot</p>
+                    <span class="material-icons">keyboard_arrow_right</span>
+                </a>
+                <a class="gui-menu-flatcard" href="serviceplanner">
+                    <span class="material-icons">keyboard_arrow_left</span>
+                    <p class="menutext">Back to Service Planner</p>
+                    <span class="material-icons">apps</span>
+                </a>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if true %}
+        {#<section class="gui-box gui-warning">#}
+        {#<p>Typical error message</p>#}
+        {#</section>#}
+    {% endif %}
+
     {% include "common/footing.twig" %}
 </div>
 

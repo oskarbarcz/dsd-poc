@@ -1,0 +1,33 @@
+.gui-box {
+    &.gui-stage {
+        .stage-container {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+
+            .stage-element {
+                background: #888888;
+                border-radius: 50%;
+                color: #EAEAEA;
+                display: block;
+                height: 30px;
+                margin: 0 5px;
+                padding: 8px;
+                text-align: center;
+                text-decoration: none;
+                width: 30px;
+                //line-height: 0.9;
+
+                &.done {
+                    background: #666666;
+                }
+                &.actual {
+                    background: #EC1B2D;
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}
