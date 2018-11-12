@@ -5,6 +5,15 @@ $TimetableData = new \DBLS\Model\TimetableData(43, 0, '15:03', 0, 1, 160);
 $Timetable = new \DBLS\Controller\Base\TimetableGenerator($TimetableData);
 $time = $Timetable->getSession();
 
-$route = new \DBLS\Controller\Base\Route();
+$session = $time->initSession();
 
-return $time->getTimetable();
+$session->next();
+$session->next();
+$session->next();
+$session->next();
+$session->next();
+
+
+//$route = new \DBLS\Controller\Base\Route();
+
+return $session->getCurrent();

@@ -53,7 +53,7 @@ class TimetableGenerator
      * @return TimetableSession fully built timetable
      * @throws TimetableException
      */
-    public function getSession(): TimetableSession
+    public function getSession(): TimetableSessionCreator
     {
         // for each step add time
         $startTime = strtotime($this->tempData->getStartTime());
@@ -64,7 +64,7 @@ class TimetableGenerator
                 $this->tempData->getFinish(), $this->tempData->getServiceCategory());
 
             // initiate an timetable
-            $Timetable = new TimetableSession("");
+            $Timetable = new TimetableSessionCreator();
 
             $arrivalTime = date('H:i', $startTime);
             $departureTimeDelta = $startTime + 4 * 60;
@@ -80,7 +80,7 @@ class TimetableGenerator
                 // on each iteration add each station details
                 $Timetable->append([
                     'arriveTime'    => date("H:i",
-                        $departureTimeDelta += $this->getTime($stationList[$iterator]['stationID'],
+                        $departureTimeDelta += $time = $this->getTime($stationList[$iterator]['stationID'],
                             $stationList[$iterator + 1]['stationID'])),
                     'departureTime' => date("H:i", $departureTimeDelta += $this->countStopTime()),
                     'stationName'   => $stationList[$iterator + 1]['stationName'],

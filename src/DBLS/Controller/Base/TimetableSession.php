@@ -1,77 +1,67 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: konta
+ * Date: 12 November 2018
+ * Time: 21:14
+ */
 
 namespace DBLS\Controller\Base;
 
-use Countable;
-use DBLS\Exceptions\TimetableException;
 
-/**
- * Class TimetableSession holds Timetable session tools
- *
- * @package DBLS\Controller\Base
- */
-class TimetableSession implements Countable
+class TimetableSession
 {
-    /**
-     * @var array Timetable held as array
-     */
-    private $timetable;
 
-    /**
-     * @var bool flag set to true locks editing options
-     */
-    private $ready;
+    private $times;
 
-    public function __construct($timetableID)
+    private $allStops;
+
+    private $actualStationIndex;
+
+    public function __construct(TimetableSessionCreator $Timetable)
     {
-        $this->timetable = [];
-        $this->ready = false;
+        // assing timetable values
+        $this->times = $Timetable->getTimetable();
+        $this->allStops = count($Timetable);
+
+        $this->actualStationIndex = 0;
     }
 
     /**
-     * Add stop on station to timetable
+     * Function returns an array with all session details, such as limits and next stations
      *
-     * @param array $data stop details
-     * @return int amount of stations already created
-     * @throws TimetableException if used when object is created
-     */
-    public function append(array $data): int
-    {
-        if ($this->ready) {
-            throw new TimetableException('Tried to append a value when object is fully created!', 121);
-        }
-        $this->timetable[] = $data;
-        return count($this->timetable);
-    }
-
-    /**
      * @return array
-     * @throws TimetableException
      */
-    public function getTimetable(): array
+    public function getCurrent(): array
     {
-        if (!$this->ready) {
-            throw new TimetableException('Timetable is not fully created!', 120);
-        }
-        return $this->timetable;
+        return [
+            'limitStations' => [
+                'first' => [
+                    'departure'   => $this->times[0]['departureTime'],
+                    'stationName' => $this->times[0]['stationName'],
+                ],
+                'last'  => [
+                    'departure'   => $this->times[$this->allStops - 1]['arriveTime'],
+                    'stationName' => $this->times[$this->allStops - 1]['stationName'],
+                ],
+            ],
+            'actualStation' => $this->times[$this->actualStationIndex],
+            'nextStation'   => $this->times[$this->actualStationIndex + 1],
+        ];
     }
 
     /**
-     * Locks editing of modules
+     * Return timetable built by TimetableGenerator for route with parameters
+     *
+     * @return array
      */
-    public function setReady(): void
+    public function getTimetable()
     {
-        $this->ready = true;
+        return $this->times;
     }
 
-    /**
-     * @return int amount of stops during the way
-     */
-    public function count(): int
+    public function next(): void
     {
-        return count($this->timetable);
+        $this->actualStationIndex++;
     }
-
-
 }
