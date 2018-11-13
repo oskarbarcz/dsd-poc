@@ -66,14 +66,14 @@ class Route implements PresenceInterface
     /**
      * Get route details with ID
      *
-     * @param int $id
+     * @param int $kbs
      * @return array
      * @throws ElementNotFoundException
      */
-    public function read(int $id): array
+    public function read(int $kbs): array
     {
-        if (!$this->has($id)) {
-            throw new ElementNotFoundException("Element with ID [{$id}] were not found", 100);
+        if (!$this->has($kbs)) {
+            throw new ElementNotFoundException("Element not found", 100);
         }
 
         return $this->db->get('routes', [
@@ -84,7 +84,7 @@ class Route implements PresenceInterface
             'length',
             'active',
         ], [
-            'routeID[=]' => $id,
+            'kbs[=]' => $kbs,
         ]);
     }
 
@@ -113,10 +113,10 @@ class Route implements PresenceInterface
      * @return bool
      * @throws ElementNotFoundException
      */
-    public function update(int $id, RouteData $Data): bool
+    public function update(int $kbs, RouteData $Data): bool
     {
-        if (!$this->has($id)) {
-            throw new ElementNotFoundException("Element with ID [{$id}] were not found", 100);
+        if (!$this->has($kbs)) {
+            throw new ElementNotFoundException("Element not found", 100);
         }
 
         $result = $this->db->update('routes', [
@@ -125,7 +125,7 @@ class Route implements PresenceInterface
             'fullName' => $Data->getName(),
             'length'   => $Data->getLength(),
         ], [
-            'routeID[=]' => $id,
+            'kbs[=]' => $kbs,
         ]);
         // return true if rows affected
         if ($result->rowCount() > 0) {
@@ -142,14 +142,14 @@ class Route implements PresenceInterface
      * @return bool
      * @throws ElementNotFoundException
      */
-    public function delete(int $id): bool
+    public function delete(int $kbs): bool
     {
-        if (!$this->has($id)) {
-            throw new ElementNotFoundException("Element with ID [{$id}] were not found", 100);
+        if (!$this->has($kbs)) {
+            throw new ElementNotFoundException("Element not found", 100);
         }
 
         $result = $this->db->delete('routes', [
-            'routeID[=]' => $id,
+            'routeID[=]' => $kbs,
         ]);
         // return true if rows affected
         if ($result->rowCount() > 0) {
@@ -159,10 +159,11 @@ class Route implements PresenceInterface
         }
     }
 
+
     /**
      * Checks if route with given KBS exists
      *
-     * @param int $kbs id of element
+     * @param int $kbs kbs of element
      * @return bool true if has, false if hasn't
      */
     public function has(int $kbs): bool

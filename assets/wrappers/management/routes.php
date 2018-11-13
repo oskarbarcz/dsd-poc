@@ -1,10 +1,12 @@
 <?php
 
 use DBLS\Controller\Base\Route;
+use DBLS\Exceptions\ElementNotFoundException;
 use DBLS\Exceptions\ValidateException;
 use DBLS\Model\RouteData;
 
 $ret = [];
+$Route = new Route();
 
 
 // DISPLAY
@@ -14,14 +16,11 @@ if (!empty(ROUTER[1]) and ROUTER[1] == 'add') {
     if (isset($_POST['submit_add'])) {
         try {
             $RouteData = new RouteData($_POST['kbs'], $_POST['maxspeed'], $_POST['name'], $_POST['length']);
-            $Route = new Route();
             if ($Route->create($RouteData)) {
                 $ret['good'] = true;
             } else {
                 $ret['error'] = 'Uncatched error occured, try again later.';
             }
-
-
         } catch (ValidateException $e) {
             $ret['error'] = $e->getMessage();
         }
@@ -43,20 +42,41 @@ if (!empty(ROUTER[1]) and ROUTER[1] == 'add') {
     $ret['window'] = 'details';
     echo 'details';
 } elseif (!empty(ROUTER[1]) and ROUTER[1] == 'edit' and (!empty(ROUTER[2]) or (int)ROUTER[2] === 0)) {
+
     // EDIT SCREEN
     if (!is_numeric(ROUTER[2])) {
         // save from situation when ID is string
         header('Location: /routesmanagement');
     }
-    /*
-     * TODO
-     *
-     *
-     */
 
+    // update data if form submitted
+    if ($_POST['submit_edit']) {
+        try {
+            $RouteData = $RouteData = new RouteData($_POST['kbs'], $_POST['maxspeed'], $_POST['name'],
+                $_POST['length']);
+            // check if changes saved successfully
+            if ($Route->update($_POST['kbs'], $RouteData)) {
+                $ret['good'] = 'Changes saved succesfully';
+            } else {
+                $ret['error'] = 'Uncatched error happened.';
+            }
+        } catch (ValidateException $e) {
+            $ret['error'] = $e->getMessage();
+        } catch (ElementNotFoundException $e) {
+            $ret['error'] = 'KBS number change is impossible.';
+        }
+    }
 
-    $ret['window'] = 'details';
-    echo 'edit';
+    // retrieve data
+    try {
+        $RouteData = $Route->read(ROUTER[2]);
+        $ret['form'] = $RouteData;
+    } catch (ElementNotFoundException $e) {
+        $ret['error'] = $e->getMessage();
+    } finally {
+        $ret['window'] = 'edit';
+    }
+
 } elseif (!empty(ROUTER[1]) and ROUTER[1] == 'delete' and (!empty(ROUTER[2]) or (int)ROUTER[2] === 0)) {
     // DELETE SCREEN
     if (!is_numeric(ROUTER[2])) {

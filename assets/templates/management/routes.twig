@@ -10,7 +10,7 @@
             <ul class="route-menu-list">
                 {% for route in routes %}
                     <li>
-                        <a href="/routesmanagement/details/{{route.routeID}}"
+                        <a href="/routesmanagement/details/{{route.kbs}}"
                            class="route-menu-element">
                             <span class="route-menu-element-track">KBS{{route.kbs}}</span>{{route.fullName}}
                         </a>
@@ -86,6 +86,100 @@
         {% endif %}
     </div>
 {% endif %}
+
+{% if window == 'edit' %}
+    <div class="gui-container">
+        <section class="gui-box">
+            <h2>Edit route</h2>
+            <p>Add an existing route to the system. Provide valid KBS number, route name, length and Vmax.</p>
+            <form action="" class="gui-form" method="post">
+                <label for="kbs">KBS number</label>
+                <input type="text" id="kbs" name="kbs" value="{{form.kbs}}" placeholder="DB Netze line ID" required>
+                <label for="name">Route name</label>
+                <input type="text" id="name" name="name" value="{{form.fullName}}"
+                       placeholder="usually both end stations"
+                       required>
+                <label for="length">Length</label>
+                <input type="number" id="length" name="length" value="{{form.length}}" placeholder="in meters" required>
+                <label for="maxspeed">Maximal allowed speed</label>
+                <select id="maxspeed" name="maxspeed" required>
+                    <option disabled>Choose maximum speed</option>
+                    <optgroup label="Conventional lines">
+                        {% if form.maxSpeed == 20 %}
+                            <option value="20" selected>up to 20 km/h</option>
+                        {% else %}
+                            <option value="20">up to 20 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 40 %}
+                            <option value="40" selected>up to 40 km/h</option>
+                        {% else %}
+                            <option value="40">up to 40 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 60 %}
+                            <option value="60" selected>up to 60 km/h</option>
+                        {% else %}
+                            <option value="60">up to 60 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 80 %}
+                            <option value="80" selected>up to 80 km/h</option>
+                        {% else %}
+                            <option value="80">up to 80 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 120 %}
+                            <option value="120" selected>up to 120 km/h</option>
+                        {% else %}
+                            <option value="120">up to 120 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 160 %}
+                            <option value="160" selected>up to 160 km/h</option>
+                        {% else %}
+                            <option value="160">up to 160 km/h</option>
+                        {% endif %}
+                    </optgroup>
+                    <optgroup label="High speed lines">
+                        {% if form.maxSpeed == 200 %}
+                            <option value="200" selected>up to 200 km/h</option>
+                        {% else %}
+                            <option value="200">up to 80 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 240 %}
+                            <option value="240" selected>up to 240 km/h</option>
+                        {% else %}
+                            <option value="240">up to 240 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 280 %}
+                            <option value="280" selected>up to 280 km/h</option>
+                        {% else %}
+                            <option value="280">up to 280 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 300 %}
+                            <option value="300" selected>up to 300 km/h</option>
+                        {% else %}
+                            <option value="300">up to 300 km/h</option>
+                        {% endif %}
+                        {% if form.maxSpeed == 320 %}
+                            <option value="320" selected>up to 320 km/h</option>
+                        {% else %}
+                            <option value="320">up to 320 km/h</option>
+                        {% endif %}
+                    </optgroup>
+                </select>
+                <input class="submit" type="submit" name="submit_edit" value="Edit">
+            </form>
+        </section>
+        {% if good %}
+            <section class="gui-box gui-success">
+                <p>Route added successfully!</p>
+            </section>
+        {% endif %}
+        {% if error %}
+            <section class="gui-box gui-warning">
+                <p>{{error}}</p>
+            </section>
+        {% endif %}
+    </div>
+{% endif %}
+
 
 {% if window == 'details' %}
     <div class="gui-container">
