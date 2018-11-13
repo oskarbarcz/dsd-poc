@@ -47,7 +47,6 @@ class RouteData extends Data implements ValidateInterface
      * @param string $name route name
      * @param int $length route length
      * @throws ValidateException
-     * @throws \Exception
      */
     public function __construct(int $kbs, int $maxSpeed, string $name, int $length)
     {

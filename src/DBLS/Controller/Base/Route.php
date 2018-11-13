@@ -11,6 +11,7 @@ namespace DBLS\Controller\Base;
 
 use ArchFW\Model\DatabaseFactory;
 use DBLS\Exceptions\ElementNotFoundException;
+use DBLS\Exceptions\ValidateException;
 use DBLS\Interfaces\PresenceInterface;
 use DBLS\Model\RouteData;
 
@@ -36,9 +37,14 @@ class Route implements PresenceInterface
      *
      * @param RouteData $Data
      * @return bool
+     * @throws ValidateException
      */
     public function create(RouteData $Data)
     {
+        if ($this->has($Data->getKbs())) {
+            throw new ValidateException('Route with this KBS already exists.', 106);
+        }
+
         $result = $this->db->insert('routes', [
             'routeID'  => null,
             'kbs'      => $Data->getKbs(),
@@ -47,6 +53,7 @@ class Route implements PresenceInterface
             'length'   => $Data->getLength(),
             'active'   => true,
         ]);
+
 
         // return true if rows affected
         if ($result->rowCount() > 0) {
@@ -153,15 +160,15 @@ class Route implements PresenceInterface
     }
 
     /**
-     * Checks if route with given ID exists
+     * Checks if route with given KBS exists
      *
-     * @param int $id id of element
+     * @param int $kbs id of element
      * @return bool true if has, false if hasn't
      */
-    public function has(int $id): bool
+    public function has(int $kbs): bool
     {
         return $this->db->has('routes', [
-            'routeID[=]' => $id,
+            'kbs[=]' => $kbs,
         ]);
     }
 }

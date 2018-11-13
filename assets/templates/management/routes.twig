@@ -10,8 +10,10 @@
             <ul class="route-menu-list">
                 {% for route in routes %}
                     <li>
-                        <a href="/routesmanagement/{{route.routeID}}"
-                           class="route-menu-element">{{route.fullName}}</a>
+                        <a href="/routesmanagement/details/{{route.routeID}}"
+                           class="route-menu-element">
+                            <span class="route-menu-element-track">KBS{{route.kbs}}</span>{{route.fullName}}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
@@ -35,31 +37,80 @@
             </li>
         </ul>
     </section>
-    {% if good %}
-        <section class="gui-box gui-success">
-            <p>Route added successfully!</p>
-        </section>
-    {% endif %}
     {% include "common/footing.twig" %}
 </div>
 
 {% if window == 'add' %}
     <div class="gui-container">
-        <div class="gui-box">
+        <section class="gui-box">
             <h2>Add route</h2>
             <p>Add an existing route to the system. Provide valid KBS number, route name, length and Vmax.</p>
             <form action="/routesmanagement/add" class="gui-form" method="post">
                 <label for="kbs">KBS number</label>
-                <input type="text" id="kbs" name="kbs" required>
+                <input type="text" id="kbs" name="kbs" placeholder="DB Netze line ID" required>
                 <label for="name">Route name</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" placeholder="usually both end stations" required>
                 <label for="length">Length</label>
-                <input type="number" id="length" name="length" required>
+                <input type="number" id="length" name="length" placeholder="in meters" required>
                 <label for="maxspeed">Maximal allowed speed</label>
-                <input type="number" id="maxspeed" name="maxspeed" required>
-                <input type="submit" name="submit_add" value="Add">
+                <select id="maxspeed" name="maxspeed" required>
+                    <optgroup label="Conventional lines">
+                        <option value="10">up to 10 km/h</option>
+                        <option value="20">up to 20 km/h</option>
+                        <option value="40">up to 40 km/h</option>
+                        <option value="60">up to 60 km/h</option>
+                        <option value="80">up to 80 km/h</option>
+                        <option value="120">up to 120 km/h</option>
+                        <option value="160" selected>up to 160 km/h</option>
+                    </optgroup>
+                    <optgroup label="High speed lines">
+                        <option value="200">up to 200 km/h</option>
+                        <option value="240">up to 240 km/h</option>
+                        <option value="280">up to 280 km/h</option>
+                        <option value="300">up to 300 km/h</option>
+                        <option value="">up to 320 km/h</option>
+                    </optgroup>
+                </select>
+                <input class="submit" type="submit" name="submit_add" value="Add">
             </form>
-        </div>
+        </section>
+        {% if good %}
+            <section class="gui-box gui-success">
+                <p>Route added successfully!</p>
+            </section>
+        {% endif %}
+        {% if error %}
+            <section class="gui-box gui-warning">
+                <p>{{error}}</p>
+            </section>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if window == 'details' %}
+    <div class="gui-container">
+        <section class="gui-box">
+            <h2>Route details</h2>
+            <span class="title">Koln Hbf - Mainz Hbf</span>
+            <span></span>
+
+            <ul class="gui-box-menu">
+                <li>
+                    <a class="gui-menu-flatcard" href="/routesmanagement/add">
+                        <span class="material-icons">create</span>
+                        <p class="menutext">Edit this route</p>
+                        <span class="material-icons">keyboard_arrow_right</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="gui-menu-flatcard" href="/panel">
+                        <span class="material-icons">close</span>
+                        <p class="menutext">Delete this route</p>
+                        <span class="material-icons">keyboard_arrow_right</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
     </div>
 {% endif %}
 
