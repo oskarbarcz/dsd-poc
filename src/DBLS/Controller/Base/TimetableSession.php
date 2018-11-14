@@ -29,6 +29,8 @@ class TimetableSession
 
         // assing timetable values
         $this->times = $Timetable->getTimetable();
+
+        $this->unit = $Timetable->getUnit();
         $this->allStops = count($Timetable);
         $this->init($User->getUserData()['accountID']);
 
@@ -81,7 +83,19 @@ class TimetableSession
      */
     private function init(int $accountID): int
     {
-        $this->db->insert('drivesessions');
+        $this->db->insert('drivesessions', [
+            'driveSessionID' => null,
+            'accountID'      => '',
+            'routeID'        => '',
+            'unitID'         => '',
+            'unitSideNumber' => '',
+            'serviceID'      => '',
+            'name'           => '',
+            'number'         => '',
+            'createDate'     => '',
+            'startTime'      => '',
+
+        ]);
 
     }
 }

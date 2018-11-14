@@ -39,7 +39,7 @@ class TimetableGenerator
      */
     private $tempData;
 
-    public function __construct(TimetableData $data)
+    public function __construct(TimetableData $data, UnitData $Unit)
     {
         $this->tempData = $data;
 
