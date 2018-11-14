@@ -23,8 +23,12 @@ class TimetableSessionCreator implements Countable
      */
     private $ready;
 
-    public function __construct()
+    private $authorID;
+
+    public function __construct(int $authorID)
     {
+        $this->authorID = $authorID;
+
         $this->timetable = [];
         $this->ready = false;
     }
@@ -59,12 +63,19 @@ class TimetableSessionCreator implements Countable
         return $this->timetable;
     }
 
-    public function initSession(): TimetableSession
+    /**
+     * Initiates session with Timetable and User infos
+     *
+     * @param User $User
+     * @return TimetableSession Session object
+     * @throws TimetableException
+     */
+    public function initSession(User $User): TimetableSession
     {
         if (!$this->ready) {
             throw new TimetableException('Timetable is not fully created!', 120);
         }
-        return new TimetableSession($this);
+        return new TimetableSession($this, $User);
     }
 
     /**
@@ -82,6 +93,5 @@ class TimetableSessionCreator implements Countable
     {
         return count($this->timetable);
     }
-
 
 }

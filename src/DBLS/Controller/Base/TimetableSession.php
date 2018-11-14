@@ -9,8 +9,11 @@
 namespace DBLS\Controller\Base;
 
 
+use ArchFW\Model\DatabaseFactory;
+
 class TimetableSession
 {
+    private $db;
 
     private $times;
 
@@ -18,11 +21,16 @@ class TimetableSession
 
     private $actualStationIndex;
 
-    public function __construct(TimetableSessionCreator $Timetable)
+    public function __construct(TimetableSessionCreator $Timetable, User $User)
     {
+        // creating database link
+        $this->db = DatabaseFactory::getInstance();
+
+
         // assing timetable values
         $this->times = $Timetable->getTimetable();
         $this->allStops = count($Timetable);
+        $this->init($User->getUserData()['accountID']);
 
         $this->actualStationIndex = 0;
     }
@@ -63,5 +71,17 @@ class TimetableSession
     public function next(): void
     {
         $this->actualStationIndex++;
+    }
+
+    /**
+     * Initiates session in database
+     *
+     * @param int $accountID
+     * @return int SessionID
+     */
+    private function init(int $accountID): int
+    {
+        $this->db->insert('drivesessions');
+
     }
 }

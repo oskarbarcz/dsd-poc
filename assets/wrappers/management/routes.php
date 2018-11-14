@@ -50,7 +50,7 @@ if (!empty(ROUTER[1]) and ROUTER[1] == 'add') {
     }
 
     // update data if form submitted
-    if ($_POST['submit_edit']) {
+    if (isset($_POST['submit_edit']) and $_POST['submit_edit']) {
         try {
             $RouteData = $RouteData = new RouteData($_POST['kbs'], $_POST['maxspeed'], $_POST['name'],
                 $_POST['length']);
@@ -83,15 +83,12 @@ if (!empty(ROUTER[1]) and ROUTER[1] == 'add') {
         // save from situation when ID is string
         header('Location: /routesmanagement');
     }
-    /*
-     * TODO
-     *
-     *
-     */
-
-
-    $ret['window'] = 'delete';
-    echo 'edit';
+    try {
+        $Route->delete(ROUTER[2]);
+        $ret['good'] = 'Route deleted successfully.';
+    } catch (ElementNotFoundException $e) {
+        $ret['error'] = $e->getMessage();
+    }
 } else {
     // UNIVERSAL SCREEN WITH TRACK LIST
     $ret['window'] = 'none';
