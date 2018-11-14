@@ -8,7 +8,6 @@
 
 namespace DBLS\Model;
 
-
 use DBLS\Exceptions\ValidateException;
 use DBLS\Interfaces\ValidateInterface;
 
@@ -33,19 +32,64 @@ class UnitData extends Data implements ValidateInterface
     const TRAIN_TYPE_CARGO_HEAVY = 'cargo-heavy';
 
     /**
-     * @var int Assigned carrier ID
+     * @var int assigned carrier ID
      */
     private $carrierID;
+
+    /**
+     * @var string train appliance
+     */
     private $type;
+
+    /**
+     * @var string train own name
+     */
     private $name;
+
+    /**
+     * @var int train length in centimeters
+     */
     private $length;
+
+    /**
+     * @var int train set weight in kilograms
+     */
     private $weight;
+
+    /**
+     * @var int maximum allowed speed in kilometers per hour
+     */
     private $maxSpeed;
+
+    /**
+     * @var string train set producer
+     */
     private $producer;
+
+    /**
+     * @var string train set power type
+     */
     private $powerType;
+
+    /**
+     * @var float acceleration ratio multiplier
+     */
     private $accRatio;
 
-
+    /**
+     * UnitData constructor.
+     *
+     * @param int $carrierID assigned carrier ID
+     * @param string $type train appliance
+     * @param string $name train own name
+     * @param int $length rain length in centimeters
+     * @param int $weight train set weight in kilograms
+     * @param int $maxSpeed maximum allowed speed in kilometers per hour
+     * @param string $producer train set producer
+     * @param string $powerType train set power type
+     * @param float $accRatio acceleration ratio multiplier
+     * @throws ValidateException when validation went wrong
+     */
     public function __construct(
         int $carrierID,
         string $type,
