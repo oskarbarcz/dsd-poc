@@ -11,6 +11,11 @@ namespace DBLS\Model;
 use DBLS\Exceptions\ValidateException;
 use DBLS\Interfaces\ValidateInterface;
 
+/**
+ * Unit dependiency injection
+ *
+ * @package DBLS\Model
+ */
 class UnitData extends Data implements ValidateInterface
 {
 
@@ -88,7 +93,7 @@ class UnitData extends Data implements ValidateInterface
      * @param string $producer train set producer
      * @param string $powerType train set power type
      * @param float $accRatio acceleration ratio multiplier
-     * @throws ValidateException when validation went wrong
+     * @throws \Exception when validation went wrong
      */
     public function __construct(
         int $carrierID,
@@ -117,6 +122,12 @@ class UnitData extends Data implements ValidateInterface
         $this->validate();
     }
 
+    /**
+     * Validates the data
+     *
+     * @return bool
+     * @throws ValidateException
+     */
     public function validate(): bool
     {
         if ($this->type !== self::TRAIN_TYPE_AGGL or $this->type !== self::TRAIN_TYPE_REGIO or $this->type !== self::TRAIN_TYPE_INTERCITY or $this->type !== self::TRAIN_TYPE_CARGO_LIGHT or $this->type !== self::TRAIN_TYPE_CARGO_HEAVY or $this->type !== self::TRAIN_TYPE_AGGL or $this->type !== self::TRAIN_TYPE_LOC_ONLY) {
@@ -146,5 +157,77 @@ class UnitData extends Data implements ValidateInterface
         } else {
             return true;
         }
+    }
+
+    /**
+     * @return int assigned carrier ID
+     */
+    public function getCarrierID(): int
+    {
+        return $this->carrierID;
+    }
+
+    /**
+     * @return string train appliance
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string train own name
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int train length in centimeters
+     */
+    public function getLength(): int
+    {
+        return $this->length;
+    }
+
+    /**
+     * @return int train set weight in kilograms
+     */
+    public function getWeight(): int
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @return int maximum allowed speed in kilometers per hour
+     */
+    public function getMaxSpeed(): int
+    {
+        return $this->maxSpeed;
+    }
+
+    /**
+     * @return string train set producer
+     */
+    public function getProducer(): string
+    {
+        return $this->producer;
+    }
+
+    /**
+     * @return string train set power type
+     */
+    public function getPowerType(): string
+    {
+        return $this->powerType;
+    }
+
+    /**
+     * @return float acceleration ratio multiplier
+     */
+    public function getAccRatio(): float
+    {
+        return $this->accRatio;
     }
 }
