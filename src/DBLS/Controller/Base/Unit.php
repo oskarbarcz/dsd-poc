@@ -10,8 +10,10 @@ namespace DBLS\Controller\Base;
 
 
 use ArchFW\Model\DatabaseFactory;
+use DBLS\Exceptions\ElementNotFoundException;
+use DBLS\Interfaces\PresenceInterface;
 
-class Unit
+class Unit implements PresenceInterface
 {
     private $db;
 
@@ -20,8 +22,18 @@ class Unit
         $this->db = DatabaseFactory::getInstance();
     }
 
+    /**
+     * @param int $id
+     * @return array
+     * @throws ElementNotFoundException when ID not found
+     */
     public function read(int $id): array
     {
+        // catch the lack of ID in database
+        if (!$this->has($id)) {
+            throw new ElementNotFoundException('Element not found', 100);
+        }
+
         // query
         $result = $this->db->select('units', [
             'unitID',
@@ -46,7 +58,7 @@ class Unit
         }
     }
 
-    public function readAll()
+    public function readAll(): array
     {
         // query
         $result = $this->db->select('units', [
@@ -68,5 +80,12 @@ class Unit
         } else {
             return [];
         }
+    }
+
+    public function has(int $id): bool
+    {
+        return $this->db->has('units', [
+            'unitID[=]' => $id,
+        ]);
     }
 }

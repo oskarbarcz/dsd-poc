@@ -128,8 +128,6 @@ class Station
 
                 throw new StationErrorException('This service can\'t start on selected station.', 103);
             } elseif ($result[count($result) - 1]['stationOrder'] != $to) {
-                echo $result[count($result) - 1]['stationOrder'];
-                echo $to;
                 throw new StationErrorException('This service can\'t stop on selected station.', 104);
             }
             return $result;

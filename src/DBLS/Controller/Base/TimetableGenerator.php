@@ -35,16 +35,27 @@ class TimetableGenerator
     private $Station;
 
     /**
+     * @var array array holding database record
+     */
+    private $unit;
+
+    /**
      * @var TimetableData Holds data required to generate timetable
      */
     private $tempData;
 
-    public function __construct(TimetableData $data, UnitData $Unit)
+    public function __construct(TimetableData $data, int $unitID)
     {
+        // assign values
         $this->tempData = $data;
 
+        // create database link
         $this->db = DatabaseFactory::getInstance();
         $this->Station = new Station($this->tempData->getRouteID());
+
+        $Unit = new Unit();
+
+        $this->unit = $Unit->read($unitID);
     }
 
     /**
