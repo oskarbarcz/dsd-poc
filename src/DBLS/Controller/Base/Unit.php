@@ -45,7 +45,7 @@ class Unit implements PresenceInterface
             'maxSpeed',
             'producer',
             'powerType',
-            'accRadio',
+            'accRatio',
         ], [
             'unitID[=]' => $id,
         ]);

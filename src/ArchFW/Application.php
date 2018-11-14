@@ -48,6 +48,7 @@ final class Application extends View
         // Load application configuration details as constant
         try {
             define('CONFIG', $this->loadConfig($configPath));
+            define('MYSQLI_DATETIME', 'Y-m-d H:i:s');
         } catch (ArchFWException $err) {
             new Error($err->getCode(), $err->getMessage(), Error::PLAIN);
         }

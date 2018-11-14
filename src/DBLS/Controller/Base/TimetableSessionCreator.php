@@ -5,6 +5,7 @@ namespace DBLS\Controller\Base;
 
 use Countable;
 use DBLS\Exceptions\TimetableException;
+use DBLS\Model\TimetableData;
 
 /**
  * Class TimetableSession holds Timetable session creation tools
@@ -18,18 +19,23 @@ class TimetableSessionCreator implements Countable
      */
     private $timetable;
 
+    private $timetableData;
+
     /**
      * @var bool flag set to true locks editing options
      */
     private $ready;
 
-    private $authorID;
+    /**
+     * @var array array holding database record
+     */
+    private $unit;
 
-    public function __construct(int $authorID)
+    public function __construct(array $unit, TimetableData $timetableData)
     {
-        $this->authorID = $authorID;
-
         $this->timetable = [];
+        $this->timetableData = $timetableData;
+        $this->unit = $unit;
         $this->ready = false;
     }
 
@@ -58,24 +64,35 @@ class TimetableSessionCreator implements Countable
     public function getTimetable(): array
     {
         if (!$this->ready) {
-            throw new TimetableException('Timetable is not fully created!', 120);
+            return [];
         }
         return $this->timetable;
+    }
+
+    public function getTimetableData(): TimetableData
+    {
+        return $this->timetableData;
+    }
+
+
+    public function getAssignedUnit(): array
+    {
+        return $this->unit;
     }
 
     /**
      * Initiates session with Timetable and User infos
      *
-     * @param User $User
+     * @param int $userID
      * @return TimetableSession Session object
      * @throws TimetableException
      */
-    public function initSession(User $User): TimetableSession
+    public function initSession(): TimetableSession
     {
         if (!$this->ready) {
             throw new TimetableException('Timetable is not fully created!', 120);
         }
-        return new TimetableSession($this, $User);
+        return new TimetableSession($this);
     }
 
     /**

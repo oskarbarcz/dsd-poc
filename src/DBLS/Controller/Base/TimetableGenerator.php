@@ -44,6 +44,14 @@ class TimetableGenerator
      */
     private $tempData;
 
+
+    /**
+     * TimetableGenerator constructor.
+     *
+     * @param TimetableData $data
+     * @param int $unitID
+     * @throws \DBLS\Exceptions\ElementNotFoundException when element not found
+     */
     public function __construct(TimetableData $data, int $unitID)
     {
         // assign values
@@ -54,14 +62,14 @@ class TimetableGenerator
         $this->Station = new Station($this->tempData->getRouteID());
 
         $Unit = new Unit();
+        $this->unit = $Unit->read($unitID)[0];
 
-        $this->unit = $Unit->read($unitID);
     }
 
     /**
      * Generates fully-built timetable
      *
-     * @return TimetableSession fully built timetable
+     * @return TimetableSessionCreator fully built timetable
      * @throws TimetableException
      */
     public function getSession(): TimetableSessionCreator
@@ -75,9 +83,9 @@ class TimetableGenerator
                 $this->tempData->getFinish(), $this->tempData->getServiceCategory());
 
             // initiate an timetable
-            $Timetable = new TimetableSessionCreator();
+            $Timetable = new TimetableSessionCreator($this->unit, $this->tempData);
 
-            $arrivalTime = date('H:i', $startTime);
+            $arrivalTime = \date('H:i', $startTime);
             $departureTimeDelta = $startTime + 4 * 60;
 
             // set start station details
@@ -90,10 +98,10 @@ class TimetableGenerator
             for ($iterator = 0; $iterator < count($stationList) - 1; $iterator++) {
                 // on each iteration add each station details
                 $Timetable->append([
-                    'arriveTime'    => date("H:i",
+                    'arriveTime'    => \date("H:i",
                         $departureTimeDelta += $time = $this->getTime($stationList[$iterator]['stationID'],
                             $stationList[$iterator + 1]['stationID'])),
-                    'departureTime' => date("H:i", $departureTimeDelta += $this->countStopTime()),
+                    'departureTime' => \date("H:i", $departureTimeDelta += $this->countStopTime()),
                     'stationName'   => $stationList[$iterator + 1]['stationName'],
                 ]);
             }

@@ -11,17 +11,31 @@ namespace DBLS\Controller\Base;
 
 use ArchFW\Model\DatabaseFactory;
 
+/**
+ * Class TimetableSession
+ *
+ * OBJECT HAS TO BE STORED IN SESSION
+ *
+ * @package DBLS\Controller\Base
+ */
 class TimetableSession
 {
     private $db;
 
     private $times;
 
+    /**
+     * @var array array holding database record
+     */
+    private $unit;
+
+    private $timetableData;
+
     private $allStops;
 
     private $actualStationIndex;
 
-    public function __construct(TimetableSessionCreator $Timetable, User $User)
+    public function __construct(TimetableSessionCreator $Timetable)
     {
         // creating database link
         $this->db = DatabaseFactory::getInstance();
@@ -29,10 +43,11 @@ class TimetableSession
 
         // assing timetable values
         $this->times = $Timetable->getTimetable();
+        $this->timetableData = $Timetable->getTimetableData();
 
-        $this->unit = $Timetable->getUnit();
+        $this->unit = $Timetable->getAssignedUnit();
         $this->allStops = count($Timetable);
-        $this->init($User->getUserData()['accountID']);
+        $this->init($this->unit['unitID']);
 
         $this->actualStationIndex = 0;
     }
@@ -83,19 +98,41 @@ class TimetableSession
      */
     private function init(int $accountID): int
     {
+        // TODO: check account existance
+
         $this->db->insert('drivesessions', [
             'driveSessionID' => null,
-            'accountID'      => '',
-            'routeID'        => '',
-            'unitID'         => '',
-            'unitSideNumber' => '',
-            'serviceID'      => '',
+            'accountID'      => $accountID,
+            'routeID'        => $this->timetableData->getRouteID(),
+            'unitID'         => $this->unit['unitID'],
+            'unitSideNumber' => '344',
+            'serviceID'      => $this->timetableData->getServiceCategory(),
             'name'           => '',
             'number'         => '',
-            'createDate'     => '',
-            'startTime'      => '',
+            'createDate'     => \date(MYSQLI_DATETIME),
+            'startTime'      => $this->timetableData->getStartTime(),
 
         ]);
 
+        return 200;
+
+    }
+
+    /**
+     * Delete database link on serialization
+     *
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return ['db'];
+    }
+
+    /**
+     * On deseralisation create new database link
+     */
+    public function __wakeup()
+    {
+        $this->db = DatabaseFactory::getInstance();
     }
 }
