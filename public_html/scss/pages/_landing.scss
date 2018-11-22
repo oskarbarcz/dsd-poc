@@ -2,7 +2,7 @@
     align-items: center;
     background: #FEFEFE;
     display: flex;
-    height: 80px;
+    height: 70px;
     justify-content: center;
     position: fixed;
     top: 0;
@@ -32,7 +32,7 @@
         width: 700px;
         .link-element {
             font-family: $navFont;
-            font-size: 30px;
+            font-size: 26px;
             margin: 0 15px;
             text-transform: uppercase;
             &:hover a {
