@@ -11,12 +11,13 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 namespace ArchFW\Model;
 
+use ArchFW\Controller\Config;
 use Medoo\Medoo;
 
 /**
@@ -32,13 +33,14 @@ final class DatabaseFactory
      */
     final public static function getInstance()
     {
-        return new Medoo([
-            'database_type' => CONFIG['database']['databaseType'],
-            'database_name' => CONFIG['database']['databaseName'],
-            'server'        => CONFIG['database']['server'],
-            'username'      => CONFIG['database']['user'],
-            'password'      => CONFIG['database']['password'],
-            'charset'       => 'utf8mb4',
-        ]);
+        return new Medoo(
+            [
+                'database_type' => Config::get(Config::SECTION_DB, 'databaseType'),
+                'database_name' => Config::get(Config::SECTION_DB, 'databaseName'),
+                'server'        => Config::get(Config::SECTION_DB, 'server'),
+                'username'      => Config::get(Config::SECTION_DB, 'user'),
+                'password'      => Config::get(Config::SECTION_DB, 'password'),
+            ]
+        );
     }
 }

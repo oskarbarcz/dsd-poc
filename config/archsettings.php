@@ -28,11 +28,11 @@ return [
 
 # This settings will set the security details of your app. Keep it untouched, it's field for application programmer.
 'security'         => [
-# Force users to access page via HTTP Secure protocol
-'https' => false,
+    # Force users to access page via HTTP Secure protocol
+    'https' => false,
 
-# Enable or disable HTTP Strict Transport Policy
-'hsts'  => false,
+    # Enable or disable HTTP Strict Transport Policy
+    'hsts'  => false,
 ],
 
 # Every page has
@@ -73,7 +73,7 @@ Example:
 # (not recommended!), no need to touch this.
 'twigConfig'       => [
     'twigWrappersPath'  => '../assets/wrappers/',
-    'twigTemplatesPath' => '..\assets\templates',
+    'twigTemplatesPath' => '..\assets\templates\\',
 ],
 
 
@@ -83,8 +83,8 @@ Example:
 'pathToErrorPages' => '../assets/errorpages',
 
 #Path to default log file (new file will be there created if any does not exist
-'defaultLogPath'   => '../logs/ArchFWLogFile.log',
-'exceptionLogPath' => '../logs/ArchFWExceptions.log',
+'defaultLogPath'   => '/../logs/ArchFWLogFile.log',
+'exceptionLogPath' => '/../logs/ArchFWExceptions.log',
 
 # Simple switch to disable API in whole application. If user will try access, app will throw 601 "Api turned off in
 # app config" error.

@@ -11,36 +11,68 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 namespace ArchFW\Controller;
 
+use ArchFW\Exceptions\RouteNotFoundException;
+use ArchFW\Interfaces\Renderable;
+use ArchFW\Interfaces\RendererFactoryInterface;
+use ArchFW\View\Renderers\HTMLRenderer;
+use ArchFW\View\Renderers\JSONRenderer;
+
 /**
  * Retrieves requested URI into file wrappers, sets GET variables, switching between api and html mode easily.
  */
-final class Router
+final class Router implements RendererFactoryInterface
 {
     /**
-     * Function for assigning wrappers and templates depending on URI
-     *
-     * Depending on URI returns API wrappers or TWIG Templates and PHP Wrappers
-     *
-     * @return string filename that has to be loaded
+     * @var array Holds "cute" URL adress as array (exploded by "/")
      */
-    public function getFileName(): string
+    private static $routingPaths = '';
+    /**
+     * @var string $requestURI Holds request URL
+     */
+    private $requestURI;
+    /**
+     * @var string $fileName Holds locator name
+     */
+    private $fileName;
+    /**
+     * @var bool Holds information is API requested (true means yes, false means no)
+     */
+    private $isAPI;
+
+    /**
+     * Router constructor.
+     *
+     * @param $requestURI
+     * @throws RouteNotFoundException
+     */
+    public function __construct($requestURI)
     {
-        // CHECK IF APP HAS
-        $uri = explode('?', $_SERVER['REQUEST_URI']);
+        // Assign values
+        $this->requestURI = $requestURI;
+
+        // Check if adress has GET attribues
+        $uri = explode('?', $requestURI);
         if (array_key_exists(1, $uri)) {
+            // Assign it if has
             $_GET = $this->findArgs($uri[1]);
         }
 
-        if (strpos($_SERVER['REQUEST_URI'], '/api/') !== false) {
-            return $this->findFiles($uri[0], true);
+        // Check where to look for mapping
+        if (strpos($requestURI, '/api/') === 0) {
+            // when requestURI is API uri
+            $this->isAPI = true;
+            $this->fileName = $this->findAPIWrappers($uri[0]);
+        } else {
+            // when requestURI is HTML uri
+            $this->isAPI = false;
+            $this->fileName = $this->findAPPWrappers($uri[0]);
         }
-        return $this->findFiles($uri[0], false);
     }
 
     /**
@@ -62,7 +94,7 @@ final class Router
                 $str = explode('=', $value);
                 if (array_key_exists(1, $str)) {
                     $output += [$str[0] => $str[1]];
-                } elseif ($str[0] != "") {
+                } elseif ($str[0] != '') {
                     $output += [$str[0] => null];
                 }
             }
@@ -71,49 +103,127 @@ final class Router
     }
 
     /**
-     * Finds file name for specified URI
+     * Find API files in routes configuration file
      *
-     * Function is checking if in config file is specified which file app should load
-     * when user enters specified URI. By default looking for twig templates,
-     * if $isAPI variable is set to true, only loads API wrapper.
-     *
-     * @param string $string Requested URI file part
-     * @param boolean $isAPI Set to true when accessing API server
-     * @return string Returns filename when found
+     * @param string $name
+     * @return string
+     * @throws RouteNotFoundException
      */
-    private function findFiles(string $string, bool $isAPI): string
+    private function findAPIWrappers(string $name): string
     {
-        $explodedURI = (explode("/", $string));
+        $explodedURI = (explode("/", $name));
 
         // delete first key, it's always empty because given string has /*/* format
         array_shift($explodedURI);
         // set URI parts as constant array
-        define('ROUTER', $explodedURI);
+        self::$routingPaths = $explodedURI;
 
-        if ($isAPI) {
-            // RUNS IF SERVER MAY BE USED AS API SERVO
-            if (CONFIG['app']['APIrunning'] === false) {
-                header("Content-Type: application/json");
-                new Error(601, 'API functionality were turned off in app config file on server.', Error::JSON);
-            }
-            if (!array_key_exists('/' . $explodedURI[1], CONFIG['routes']['APIrouter'])) {
-                new Error(404, "Router did not found route '/{$explodedURI[1]}' in API config file!", Error::JSON);
-            }
-
-            $file = CONFIG['app']['APIwrappers'] . "/" . CONFIG['routes']['APIrouter']['/' . $explodedURI[1]];
-            if (!file_exists("$file.php")) {
-                new Error(404, "Wrapper file does not exist or no access!", Error::JSON);
-            }
-            $json = require_once "$file.php";
-            echo json_encode($json);
-            exit;
-        } elseif (!array_key_exists('/' . $explodedURI[0], CONFIG['routes']['APProuter'])) {
-            if (CONFIG['app']['production']) {
-                new Error(404, "Router did not found route '/{$explodedURI[0]}' in APP config file!", Error::PLAIN);
-            }
-            new Error(404, "Not Found", Error::HTML);
+        // check if API is turned on in config
+        if (!Config::get(Config::SECTION_APP, 'APIrunning')) {
+            throw new RouteNotFoundException(
+                'API functionality were turned off in app config file on server.',
+                601
+            );
         }
-        return CONFIG['routes']['APProuter']['/' . $explodedURI[0]];
+
+        // check if path exists, if no throw an exception
+        if (!array_key_exists('/' . $explodedURI[1], Config::get(Config::SECTION_ROUTER, 'APIrouter'))) {
+            throw new RouteNotFoundException(
+                "Router did not found route '/{$explodedURI[1]}' in API config file!",
+                602
+            );
+        }
+
+        // return path if exists
+        return Config::get(Config::SECTION_APP, 'APIwrappers')
+            . '/' .
+            Config::get(Config::SECTION_ROUTER, 'APIrouter')['/' . $explodedURI[1]];
+    }
+
+    /**
+     * Find app files in routes configuration file
+     *
+     * @param string $name
+     * @return string
+     * @throws RouteNotFoundException
+     */
+    private function findAPPWrappers(string $name): string
+    {
+        $explodedURI = (explode("/", $name));
+
+        // delete first key, it's always empty because given string has /*/* format
+        array_shift($explodedURI);
+        // set URI parts as static array
+        self::$routingPaths = $explodedURI;
+
+        // if no route found
+        if (!array_key_exists('/' . $explodedURI[0], Config::get(Config::SECTION_ROUTER, 'APProuter'))) {
+            // if redirectOnNoMatch were set
+            if ($route = Config::get(Config::SECTION_ROUTER, 'redirectOnNoMatch') and $route) {
+                // catch possible recurse usage, throw an error then
+                if (isset($_SESSION['catchInfLoop']) and $_SESSION['catchInfLoop'] === true) {
+                    $_SESSION['catchInfLoop'] = false;
+                    throw new RouteNotFoundException(
+                        'RedirectOnMatch adress does not have assigned route path.',
+                        606
+                    );
+                }
+                $_SESSION['catchInfLoop'] = true;
+
+                // redirect to route
+                header("Location: {$route}");
+                exit();
+            } elseif (!Config::get(Config::SECTION_APP, 'production')) {
+                // if route weren't found and redirectOnNoMatch wasn't set and developer mode is on
+                throw new RouteNotFoundException(
+                    "Router did not found route '/{$explodedURI[0]}' in APP config file!",
+                    604
+                );
+            }
+            // if route isn't found and production mode is turned on
+            throw new RouteNotFoundException(
+                "Not found",
+                605
+            );
+        } else {
+            // return path if found
+            return Config::get(Config::SECTION_ROUTER, 'APProuter')['/' . $explodedURI[0]];
+        }
+    }
+
+    /**
+     * Get nth element of URL in cute adresses (exploded by "/")
+     *
+     * @param int $index
+     * @return string
+     */
+    public static function getNthURI(int $index): string
+    {
+        return (isset(self::$routingPaths[$index])) ? self::$routingPaths[$index] : '';
+    }
+
+    /**
+     * Get nth element of URL in cute adresses (exploded by "/")
+     *
+     * @return array
+     */
+    public static function getAllURI(): array
+    {
+        return self::$routingPaths;
+    }
+
+    /**
+     * Method returns proper renderer depending on content
+     *
+     * @return Renderable returns renderer to be used
+     * @throws \ArchFW\Exceptions\NoFileFoundException
+     */
+    public function getRenderer(): Renderable
+    {
+        if ($this->isAPI) {
+            return new JSONRenderer($this->fileName);
+        } else {
+            return new HTMLRenderer($this->fileName);
+        }
     }
 }
-

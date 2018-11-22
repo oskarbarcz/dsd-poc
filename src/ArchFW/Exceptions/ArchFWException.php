@@ -11,12 +11,13 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 namespace ArchFW\Exceptions;
 
+use ArchFW\Controller\Config;
 use ArchFW\Controller\Logger;
 use Exception;
 use Throwable;
@@ -48,7 +49,7 @@ class ArchFWException extends Exception implements Throwable
      */
     protected function log()
     {
-        $Log = new Logger(CONFIG['app']['exceptionLogPath']);
+        $Log = new Logger(Config::get(Config::SECTION_APP, 'exceptionLogPath'));
         $msg = "\n[{$Log->getDate()}]";
         $msg .= "\n\t\t[{$this->code}] [{$this->message}]";
         $msg .= "\n\t\tLine {$this->line} in file [{$this->file}]";

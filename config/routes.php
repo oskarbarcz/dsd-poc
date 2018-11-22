@@ -11,14 +11,14 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.5.1
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 return [
     # Add adresses to our router. Key here is a URL adress user enters, and value is name of wrapper and twig files.
     # When file is in subdirectory, you can use '/', e.g. 'login/recoverpassword'.
-    'APProuter' => [
+    'APProuter'         => [
         '/'                  => 'panel',
         '/login'             => 'login/login',
         '/panel'             => 'panel',
@@ -38,13 +38,18 @@ return [
         '/about'             => 'about',
         '/logoff'            => 'login/logoff',
     ],
-
     # Router in API is matching URL (key here) and wrapper file name (value here)
-    'APIrouter' => [
+    'APIrouter'         => [
         '/test'        => 'test',
         '/routercheck' => 'routercheck',
         '/auth'        => 'auth',
         '/stationlist' => 'stationlist',
         '/timetable'   => 'timetable',
     ],
+
+    # Redirect all routes that does not match the above scheme to other, defined above route
+    # set FALSE to turn off this function
+    # set STRING with route to turn on this function
+    'redirectOnNoMatch' => '/',
+
 ];

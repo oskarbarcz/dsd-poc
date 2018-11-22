@@ -11,7 +11,7 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
@@ -24,10 +24,6 @@ namespace ArchFW\Controller;
  */
 class Logger
 {
-    /**
-     * Holds path to default log file
-     */
-    const DEFAULT_PATH = CONFIG['app']['defaultLogPath'];
 
     /**
      * @var string $path Holds path to log file
@@ -60,9 +56,9 @@ class Logger
         $this->date = date('Y-m-d H:i:s');
         $this->last = null;
 
-        $this->path = isset($customPath) ? $customPath : self::DEFAULT_PATH;
+        $this->path = isset($customPath) ? $customPath : Config::get(Config::SECTION_APP, 'defaultLogPath');
 
-        if (!file_exists($this->path)) {
+        if (!file_exists(realpath($_SERVER['DOCUMENT_ROOT'] . $this->path))) {
             $this->initNew();
         }
     }
@@ -72,8 +68,8 @@ class Logger
      */
     private function initNew(): void
     {
-        if ($File = fopen($this->path, 'w+')) {
-            $path = realpath($this->path);
+        if ($File = fopen($_SERVER['DOCUMENT_ROOT'] . $this->path, 'w+')) {
+            $path = realpath($_SERVER['DOCUMENT_ROOT'] . $this->path);
             fwrite($File, "ArchFW Log File, created on [{$this->date}] in [{$path}]");
             fclose($File);
         } else {
@@ -89,15 +85,11 @@ class Logger
      * @param string|null $callbackMessage provide an information what will happen after error occurs
      * @return bool true on success, false on fail
      */
-    public function log(
-        string $message,
-        int $code = null,
-        string $callbackMessage = null
-    ): bool {
-
+    public function log(string $message, int $code = null, string $callbackMessage = null): bool
+    {
 
         // Message is builded on standard log file, and raw on other files
-        if ($this->path === self::DEFAULT_PATH) {
+        if ($this->path === Config::get(Config::SECTION_APP, 'defaultLogPath')) {
             // CREATE CODE TEMPLATE
             if (!empty($callbackMessage)) {
                 $message = "\n[{$this->date}] > [CODE {$code}]: {$message}. Callback: {$callbackMessage}.";
@@ -105,7 +97,6 @@ class Logger
                 $message = "\n[{$this->date}] > [CODE {$code}]: {$message}. No callback provided.";
             }
         }
-
         // Write last sent message as field
         $this->last = $message;
 
@@ -115,7 +106,11 @@ class Logger
         }
         // Using the FILE_APPEND flag to append the content to the end of the file
         // The LOCK_EX flag to prevent anyone else writing to the file at the same time
-        return file_put_contents($this->path, $message, FILE_APPEND | LOCK_EX) ? true : false;
+        return file_put_contents(
+            realpath($_SERVER['DOCUMENT_ROOT'] . $this->path),
+            $message,
+            FILE_APPEND | LOCK_EX
+        ) ? true : false;
     }
 
     /**

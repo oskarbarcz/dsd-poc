@@ -11,18 +11,18 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 namespace ArchFW\Controller;
 
-use ArchFW\Controller\Interfaces\IError;
+use ArchFW\Interfaces\Errorable;
 
 /**
  * Class shows verbose or JSON errors, easy to extend and add user's own action.
  */
-class Error implements IError
+class Error implements Errorable
 {
     /**
      * Defining class
@@ -52,7 +52,6 @@ class Error implements IError
      * @param string $message message to be shown
      * @param string $method Choose between method to show error, values: html|plain|json
      *
-     * @return void
      */
     public function __construct(int $code, string $message, string $method)
     {
@@ -78,34 +77,29 @@ class Error implements IError
     }
 
     /**
+     * Action which is given to user. By default it's doing nothing,
+     * but while overriding this function by inheritance user may add his own needs.
+     *
+     * @return void
+     */
+    public function action(): void
+    {
+    }
+
+    /**
      * Throw verbose HTML error
      *
      * @return void
      */
     protected function htmlError(): void
     {
-        $path = CONFIG['app']['pathToErrorPages'] . "/$this->code.html";
+        $path = Config::get(Config::SECTION_APP, 'pathToErrorPages') . "/$this->code.html";
         if (file_exists($path)) {
             require_once($path);
             exit;
         } else {
             $this->plainError(true);
         }
-    }
-
-    /**
-     * Throw JSON error response
-     *
-     * @return void
-     */
-    protected function jsonError(): void
-    {
-        header('Content-Type: application/json');
-        exit(json_encode([
-            'error'        => true,
-            'errorCode'    => $this->code,
-            'errorMessage' => $this->message,
-        ]));
     }
 
     /**
@@ -117,23 +111,25 @@ class Error implements IError
      */
     protected function plainError(bool $force /* FORCE */): void
     {
-        if (CONFIG['app']['production'] or !$force) {
+        if (Config::get(Config::SECTION_APP, 'production') or $force) {
             $this->htmlError();
         } else {
             header('Content-Type: text/plain');
-            exit("ERROR $this->code OCCURED, WITH MESSAGE '$this->message'.
-                ERROR-SPECIFIC FILES WERE NOT FOUND, OR DEV MODE IS TURNED ON.");
+            exit(
+                "ERROR {$this->code} OCCURED, WITH MESSAGE '{$this->message}'. " . '
+                 ERROR-SPECIFIC FILES WERE NOT FOUND, OR PROD MODE IS TURNED OFF.'
+            );
         }
     }
 
     /**
-     * Action which is given to user. By default it's doing nothing,
-     * but while overriding this function by inheritance user may add his own needs.
+     * Throw JSON error response
      *
      * @return void
      */
-    public function action(): void
+    protected function jsonError(): void
     {
+        header('Content-Type: application/json');
+        exit(json_encode(['error' => true, 'errorCode' => $this->code, 'errorMessage' => $this->message]));
     }
 }
-

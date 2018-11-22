@@ -11,20 +11,20 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 
 namespace ArchFW\Exceptions;
 
-use Exception;
+use Throwable;
 
 /**
  * NoDatabaseException is thrown when database cannot be reached or datas are wrong.
  *
  * @package ArchFW\Exceptions
  */
-class NoDatabaseException extends Exception
+class NoDatabaseException extends ArchFWException implements Throwable
 {
 }

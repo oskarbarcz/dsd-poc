@@ -11,16 +11,21 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   2.6.0
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 namespace ArchFW;
 
-use ArchFW\Base\View;
+use ArchFW\Controller\Config;
 use ArchFW\Controller\Error;
 use ArchFW\Controller\Router;
-use ArchFW\Exceptions\ArchFWException;
+use ArchFW\Exceptions\NoFileFoundException;
+use ArchFW\Exceptions\RouteNotFoundException;
+use ArchFW\Model\ConfigFactory;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 
 /**
  * Representation of ArchFW Application
@@ -29,15 +34,8 @@ use ArchFW\Exceptions\ArchFWException;
  * It's also an app starter - constructor here does all stuff you need to run an app.
  * App will not check validity of vendor or config, so you have to do it separately.
  */
-final class Application extends View
+final class Application
 {
-    /**
-     * Holds pointer to application router
-     *
-     * @var Router
-     */
-    private $Router;
-
     /**
      * Application constructor. Main method that is running selected classes, initiate session and router.
      *
@@ -45,77 +43,68 @@ final class Application extends View
      */
     public function __construct(string $configPath)
     {
-        // Load application configuration details as constant
         try {
-            define('CONFIG', $this->loadConfig($configPath));
-            define('MYSQLI_DATETIME', 'Y-m-d H:i:s');
-        } catch (ArchFWException $err) {
-            new Error($err->getCode(), $err->getMessage(), Error::PLAIN);
+            // Load application configuration details as constant
+            ConfigFactory::fill($configPath);
+
+            // Force HTTPS connection if setted in settings so
+            if (Config::get(Config::SECTION_APP, 'security')['https']) {
+                $this->https();
+            }
+
+            // Run HTTP Secure Transport Policy
+            $this->hsts(Config::get(Config::SECTION_APP, 'security')['hsts']);
+
+            // Ensure that session is securely started
+            $this->secureSession();
+
+            // Turn on error reporting depending on production switch
+            $this->errorReporting(!Config::get(Config::SECTION_APP, 'production'));
+
+            // Start routing and rendering
+            $Router = new Router($_SERVER['REQUEST_URI']);
+            $Renderer = $Router->getRenderer();
+            $page = $Renderer->render();
+
+            // response
+            print $page;
+        } catch (RouteNotFoundException $e) {
+            switch ($e->getCode()) {
+                case 601:
+                    $method = Error::JSON;
+                    break;
+                case 602:
+                    $method = Error::JSON;
+                    break;
+                case 603:
+                    $method = Error::JSON;
+                    break;
+                case 604:
+                    $method = Error::PLAIN;
+                    break;
+                case 605:
+                    $method = Error::HTML;
+                    break;
+                case 606:
+                    $method = Error::PLAIN;
+                    break;
+                default:
+                    $method = Error::HTML;
+            }
+            new Error(
+                $e->getCode(),
+                $e->getMessage(),
+                $method
+            );
+        } catch (NoFileFoundException $e) {
+            new Error(404, $e->getMessage(), Error::PLAIN);
+        } catch (Twig_Error_Loader $e) {
+            new Error(500, $e->getMessage(), Error::PLAIN);
+        } catch (Twig_Error_Runtime $e) {
+            new Error(500, $e->getMessage(), Error::PLAIN);
+        } catch (Twig_Error_Syntax $e) {
+            new Error(500, $e->getMessage(), Error::PLAIN);
         }
-
-
-        // Force HTTPS connection if setted in settings so
-        if (CONFIG['app']['security']['https']) {
-            $this->https();
-        }
-
-        // Run HTTP Secure Transport Policy
-        $this->hsts(CONFIG['app']['security']['hsts']);
-
-        // Ensure that session is securely started
-        $this->secureSession();
-
-        // Turn on error reporting depending on production switch
-        $this->errorReporting(!CONFIG['app']['production']);
-
-        // Start routing
-        $this->Router = new Router;
-        $file = $this->Router->getFileName();
-
-        $wrapper = "$file.php";
-        $template = "$file.twig";
-
-        // Use renderer
-        parent::render($wrapper, $template);
-    }
-
-    /**
-     * Returns config array
-     *
-     * @param string $path
-     * @throws ArchFWException when config files were not found
-     *
-     * @return array Application config files
-     */
-    private function loadConfig(string $path): array
-    {
-        $masterCfgPath = "{$path}/archsettings.php";
-        $databaseCfgPath = "{$path}/database.php";
-        $routesCfgPath = "{$path}/routes.php";
-
-        if (file_exists($masterCfgPath)) {
-            $applicationConfig = require $masterCfgPath;
-        } else {
-            throw new ArchFWException('No master config file found.', 404);
-        }
-
-        if (file_exists($databaseCfgPath)) {
-            $databaseConfig = require $databaseCfgPath;
-        } else {
-            throw new ArchFWException('No database config file found.', 404);
-        }
-
-        if (file_exists($routesCfgPath)) {
-            $routesConfig = require $routesCfgPath;
-        } else {
-            throw new ArchFWException('No routes config file found.', 404);
-        }
-
-        return [
-            'app'      => $applicationConfig,
-            'database' => $databaseConfig,
-            'routes'   => $routesConfig,
-        ];
     }
 
     /**
