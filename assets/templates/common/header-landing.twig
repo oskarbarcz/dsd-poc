@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{{metaComment|raw}}
+<html lang="{{pageLanguage}}">
+<head>
+    <meta charset="{{pageEncoding|raw}}">
+    {% if windowTitle %}
+        <title>{{windowTitle}}</title>
+    {% else %}
+        <title>{{pageTitle}}</title>
+    {% endif %}
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{pageDescription}}">
+    <meta name="keywords" content="{{pageKeywords}}">
+    <meta name="author" content="{{pageAuthor}}">
+    {% for each in stylesheets %}
+        <!-- {{each.name}} -->
+        <link type="{{each.type}}" rel="{{each.rel}}" href="{{each.link}}"/>
+    {% endfor %}
+</head>
+<body class="landing">

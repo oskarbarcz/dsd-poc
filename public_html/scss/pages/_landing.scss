@@ -1,0 +1,62 @@
+.landing-nav {
+    align-items: center;
+    background: #FEFEFE;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    @include shadow(1);
+    .title {
+        align-items: center;
+        color: #444444;
+        display: flex;
+        font-family: $titleFont;
+        font-size: 30px;
+        justify-content: center;
+        text-transform: uppercase;
+        .logo {
+            height: 40px;
+            margin: 0 10px;
+        }
+    }
+    .link-container {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        margin-left: 200px;
+        width: 700px;
+        .link-element {
+            font-family: $navFont;
+            font-size: 30px;
+            margin: 0 15px;
+            text-transform: uppercase;
+            &:hover a {
+                color: #EC1B2D;
+                transform: scale(1.075);
+            }
+            a {
+                color: #666666;
+                display: block;
+                text-decoration: none;
+                @include easeinout();
+            }
+        }
+    }
+}
+
+.landing-hero {
+    background: url(../../img/backgrounds/7.jpg) no-repeat center center fixed;
+    background-size: cover;
+    height: 90vh;
+    z-index: 50;
+}
+
+.landing-sizer {
+    height: 300vh;
+    z-index: 50;
+}

@@ -23,3 +23,7 @@
     }
 
 }
+
+@mixin easeinout() {
+    transition: ease-in-out all 0.2s;
+}

@@ -19,7 +19,7 @@ return [
     # Add adresses to our router. Key here is a URL adress user enters, and value is name of wrapper and twig files.
     # When file is in subdirectory, you can use '/', e.g. 'login/recoverpassword'.
     'APProuter'         => [
-        '/'                  => 'panel',
+        '/'                  => 'index',
         '/login'             => 'login/login',
         '/panel'             => 'panel',
         '/management'        => 'management',
