@@ -11,6 +11,7 @@ namespace DBLS\Model;
 
 use DBLS\Exceptions\ValidateException;
 use DBLS\Interfaces\ValidateInterface;
+use function strlen;
 
 /**
  * Route data dependiency injector
@@ -42,10 +43,10 @@ class RouteData extends Data implements ValidateInterface
     /**
      * RouteData constructor.
      *
-     * @param int $kbs kursbuckstrecke
-     * @param int $maxSpeed maximum speed
-     * @param string $name route name
-     * @param int $length route length
+     * @param int    $kbs      kursbuckstrecke
+     * @param int    $maxSpeed maximum speed
+     * @param string $name     route name
+     * @param int    $length   route length
      * @throws ValidateException
      */
     public function __construct(int $kbs, int $maxSpeed, string $name, int $length)

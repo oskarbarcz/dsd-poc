@@ -8,15 +8,17 @@
 
 namespace DBLS\Model;
 
+use DBLS\Exceptions\ValidateException;
+use DBLS\Interfaces\ValidateInterface;
 use Exception;
-use PasswordManager\Interfaces\IValidator;
+use function strlen;
 
 /**
  * Dependiency injection obiect for creating new user
  *
  * @package PasswordManager\Model
  */
-class RegisterData extends Data implements IValidator
+class RegisterData extends Data implements ValidateInterface
 {
 
     /**
@@ -51,12 +53,12 @@ class RegisterData extends Data implements IValidator
     /**
      * Assigning values as properties and validate them.
      *
-     * @param string $name user entered name
-     * @param string $surname user entered surname
-     * @param string $login user entered login
+     * @param string $name      user entered name
+     * @param string $surname   user entered surname
+     * @param string $login     user entered login
      * @param string $password1 user password (first attempt)
      * @param string $password2 user password (second attempt)
-     * @param string $email user e-mail
+     * @param string $email     user e-mail
      * @throws Exception when password is not valid
      */
     public function __construct($name, $surname, $login, $password1, $password2, $email)
@@ -77,34 +79,43 @@ class RegisterData extends Data implements IValidator
      * Validates fully entered data
      *
      * @return bool true if everything went OK while verifying
-     * @throws Exception when given data are not valid
+     * @throws ValidateException when given data are not valid
      */
     public function validate(): bool
     {
         // validate through all steps will make sure that user has entered everything correctly
         if ((strlen($this->login) < 5) or (strlen($this->login) > 16)) {
             // step #1 - verify login, login must be between 5 and 16 characters
-            throw new Exception("Login must be between 5 and 16 characters length.", 601);
-        } else if ((strlen($this->name) < 2) or (strlen($this->name) > 32)) {
-            // step #2 - verify name, name must be between 2 and 32 characters
-            throw new Exception("Account name must be between 2 and 32 characters length.", 602);
-        } else if ((strlen($this->surname) < 2) or (strlen($this->surname) > 32)) {
-            // step #3 - verify surname, surname must be between 2 and 32 characters
-            throw new Exception("Account surname must be between 2 and 32 characters length.", 603);
-        } else if ($this->password1 !== $this->password2) {
-            // step #4 - verify passwords, passwords must be the same
-            throw new Exception("Both passwords must be the same.", 604);
-        } else if ((strlen($this->password1) < 8) or !$this->_checkComplexity($this->password1)) {
-            // step #5 - verify password complexity
-            throw new Exception("Passwords are not complex enough.", 605);
-        } else if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            // step #6 - verify e-mail structure
-            throw new Exception("E-mail has no valid format.", 606);
-        } else {
-            return true;
+            throw new ValidateException('Login must be between 5 and 16 characters length.', 601);
         }
 
+        // step #2 - verify name, name must be between 2 and 32 characters
+        if ((strlen($this->name) < 2) or (strlen($this->name) > 32)) {
 
+            throw new ValidateException('Account name must be between 2 and 32 characters length.', 602);
+        }
+
+        // step #3 - verify surname, surname must be between 2 and 32 characters
+        if ((strlen($this->surname) < 2) or (strlen($this->surname) > 32)) {
+            throw new ValidateException('Account surname must be between 2 and 32 characters length.', 603);
+        }
+
+        // step #4 - verify passwords, passwords must be the same
+        if ($this->password1 !== $this->password2) {
+            throw new ValidateException('Both passwords must be the same.', 604);
+        }
+
+        // step #4 - verify passwords, passwords must be the same
+        if ((strlen($this->password1) < 8) or !$this->checkComplexity($this->password1)) {
+            // step #5 - verify password complexity
+            throw new ValidateException('Passwords are not complex enough.', 605);
+        }
+
+        // step #6 - verify e-mail structure
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            throw new ValidateException('E-mail has no valid format.', 606);
+        }
+        return true;
     }
 
     /**
@@ -115,21 +126,20 @@ class RegisterData extends Data implements IValidator
      * @param $password
      * @return bool
      */
-    private function _checkComplexity($password): bool
+    private function checkComplexity($password): bool
     {
         $uppercase = preg_match('@[A-Z]@', $password);
         $lowercase = preg_match('@[a-z]@', $password);
         $number = preg_match('@[0-9]@', $password);
-        if (!$uppercase || !$lowercase || !$number) {
-            return false;
-        } else return true;
+
+        return !(!$uppercase || !$lowercase || !$number);
 
     }
 
     /**
      * @return string Holds new user's login
      */
-    public function getLogin()
+    public function getLogin(): string
     {
         return $this->login;
     }
@@ -137,7 +147,7 @@ class RegisterData extends Data implements IValidator
     /**
      * @return string Holds new user's name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -145,7 +155,7 @@ class RegisterData extends Data implements IValidator
     /**
      * @return string Holds new user's surname
      */
-    public function getSurname()
+    public function getSurname(): string
     {
         return $this->surname;
     }
@@ -153,7 +163,7 @@ class RegisterData extends Data implements IValidator
     /**
      * @return string Holds new user's password
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password1;
     }
@@ -161,7 +171,7 @@ class RegisterData extends Data implements IValidator
     /**
      * @return string Holds new user's e-mail
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

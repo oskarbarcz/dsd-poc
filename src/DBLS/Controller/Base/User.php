@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * Account: konta
- * Date: 15 August 2018
- * Time: 12:53
- */
 
 namespace DBLS\Controller\Base;
 
@@ -13,6 +7,8 @@ use DBLS\Model\LoginData;
 use DBLS\Model\RegisterData;
 use DBLS\Model\RestorePasswordData;
 use Medoo\Medoo;
+use function date;
+use function hash;
 
 /**
  * Instantiate this class to log user and manage them.
@@ -29,45 +25,45 @@ class User
      * Warning! Value is emptyied while succesful
      * logging user!
      */
-    protected $_userLogin;
+    protected $userLogin;
 
     /**
      * @var string Holds user password from object given in constructor. Warning! Value is emptyied while succesful
      * logging user!
      */
-    protected $_userPassword;
+    protected $userPassword;
 
     /**
      * @var bool Holds flag about being logged
      */
-    protected $_isLogged;
+    protected $isLogged;
 
     /**
      * @var Medoo Holds Database connection
      */
-    protected $_db;
+    protected $database;
 
     /**
      * @var array Holds details about user
      */
-    protected $_userData;
+    protected $userData;
 
     #region Instance methods
 
     /**
      * Account constructor.
      *
-     * @param LoginData $Data
+     * @param LoginData $data
      */
-    public function __construct(LoginData $Data)
+    public function __construct(LoginData $data)
     {
-        $this->_isLogged = false;
+        $this->isLogged = false;
 
         // set database connection
-        $this->_db = DatabaseFactory::getInstance();
+        $this->database = DatabaseFactory::getInstance();
 
-        $this->_userLogin = $Data->getLogin();
-        $this->_userPassword = $Data->getPassword();
+        $this->userLogin = $data->getLogin();
+        $this->userPassword = $data->getPassword();
     }
 
     /**
@@ -83,16 +79,16 @@ class User
         }
 
         // set database connection
-        $db = DatabaseFactory::getInstance();
+        $database = DatabaseFactory::getInstance();
 
         // executing add query
-        $db->insert('accounts', [
+        $database->insert('accounts', [
             'accountID'     => null,
-            'name'          => $Data->getName(),
-            'surname'       => $Data->getSurname(),
-            'login'         => $Data->getLogin(),
-            'password'      => hash('sha256', $Data->getPassword()),
-            'email'         => $Data->getEmail(),
+            'name'          => $data->getName(),
+            'surname'       => $data->getSurname(),
+            'login'         => $data->getLogin(),
+            'password'      => hash('sha256', $data->getPassword()),
+            'email'         => $data->getEmail(),
             'active'        => true,
             'lastLoginTime' => null,
             'registerTime'  => date('Y-m-d H:i:s'),
@@ -127,8 +123,12 @@ class User
         return $data ? true : false;
     }
 
-    public static function recoverPassword(RestorePasswordData $Password)
+    /**
+     * @param RestorePasswordData $Password
+     */
+    public static function recoverPassword(/*RestorePasswordData $Password*/)
     {
+        //TODO: Implement password recovery
     }
 
     /**
@@ -138,12 +138,12 @@ class User
      */
     public function logUser(): bool
     {
-        if ($this->_isLogged) {
+        if ($this->isLogged) {
             return true;
         }
 
         // database query
-        $data = $this->_db->select('accounts', [
+        $data = $this->database->select('accounts', [
             '[>]carriers' => [
                 'carrierID' => 'carrierID',
             ],
@@ -166,53 +166,50 @@ class User
         ], [
             'AND' => [
                 'OR'                          => [
-                    'accounts.accountLogin[=]' => $this->_userLogin,
-                    'accounts.accountEmail[=]' => $this->_userLogin,
+                    'accounts.accountLogin[=]' => $this->userLogin,
+                    'accounts.accountEmail[=]' => $this->userLogin,
                 ],
-                'accounts.accountPassword[=]' => $this->_userPassword,
+                'accounts.accountPassword[=]' => $this->userPassword,
                 'accounts.accountActive[=]'   => true,
             ],
         ]);
 
         // empty array evaluates to false
         if ($data) {
-            $this->_isLogged = true;
+            $this->isLogged = true;
 
             // set new last login time in database
-            $this->_updateLLT($data[0]['account']['accountID']);
+            $this->updateLLT($data[0]['account']['accountID']);
 
             // setting user details as class property
-            $this->_userData = $data[0];
+            $this->userData = $data[0];
 
 
             // freeing memory from unnessesary stuff
-            $this->_userLogin = null;
-            $this->_userPassword = null;
+            $this->userLogin = null;
+            $this->userPassword = null;
             return true;
-        } else {
-            $this->_isLogged = false;
-            return false;
         }
+
+        $this->isLogged = false;
+        return false;
     }
 
     /**
      * Updates logged user last login time
      *
-     * @param integer $id logged user ID
+     * @param integer $accountID logged user ID
      */
-    protected function _updateLLT($id): void
+    protected function updateLLT($accountID): void
     {
         $date = date('Y-m-d H:i:s');
 
-        $this->_db->update('accounts', [
+        $this->database->update('accounts', [
             'accountLastLoginTime' => $date,
         ], [
-            'accountID[=]' => $id,
+            'accountID[=]' => $accountID,
         ]);
     }
-
-#endregion
-#region Static methods
 
     /**
      * Check if database with user data works correctly
@@ -221,11 +218,10 @@ class User
      */
     public function isDatabaseConnection(): bool
     {
-        if ($this->_db) {
+        if ($this->database) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -233,9 +229,9 @@ class User
      *
      * @return boolean|null
      */
-    public function isLogged()
+    public function isLogged(): ?bool
     {
-        return $this->_isLogged;
+        return $this->isLogged;
     }
 
     /**
@@ -243,27 +239,28 @@ class User
      *
      * @return array
      */
-    public function getUserData()
+    public function getUserData(): array
     {
-        return $this->_userData;
+        return $this->userData;
     }
 
-#endregion
-#region Magic methods
-
+    /**
+     * @return array
+     */
     public function __sleep()
     {
         return [
-            '_userData',
-            '_isLogged',
+            'userData',
+            'isLogged',
         ];
     }
 
+    /**
+     * Tasks to do on unserialize
+     */
     public function __wakeup()
     {
-        $this->_db = DatabaseFactory::getInstance();
+        $this->database = DatabaseFactory::getInstance();
     }
 
-
-#endregion
 }
