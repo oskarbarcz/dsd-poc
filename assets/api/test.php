@@ -1,15 +1,13 @@
 <?php
 
-// Example of safe authenticate
-// new Authenticator("region");
+use ArchFW\Controller\Router;
 
-$json = [
-    'state' => 'working',
-    'apiMessage' => 'test done correctly',
-];
+$a = Router::getNthURI(2);
 
-// EXAMPLE OF THROWING ERRORS:
-// Application::error(404,"NOT FOUND", "json");
+if ($a == 20) {
+    echo 'Liczba jest równa 20';
+} else {
+    echo 'Liczba nie jest równa 20';
+}
 
-
-return $json;
+die;

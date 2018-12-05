@@ -31,18 +31,17 @@ class TrackObject extends CRUD
      */
     public function create(TrackObjectData $data): bool
     {
-        $result = $this->db->insert('trackobjects', [
-            'objectID'        => null,
-            'objectTypeID'    => $data->getTypeID(),
-            'objectRouteID'   => $data->getRouteID(),
-            'objectName'      => $data->getName(),
-            'objectKilometer' => $data->getKilometer(),
-        ]);
-        if ($result->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        $result = $this->db->insert(
+            'trackobjects',
+            [
+                'objectID'        => null,
+                'objectTypeID'    => $data->getTypeID(),
+                'objectRouteID'   => $data->getRouteID(),
+                'objectName'      => $data->getName(),
+                'objectKilometer' => $data->getKilometer(),
+            ]
+        );
+        return $result->rowCount() > 0;
 
     }
 
@@ -54,23 +53,27 @@ class TrackObject extends CRUD
      */
     public function read($id): array
     {
-        return $this->db->debug()->select('trackobjects', [
-            '[>]objecttypes' => [
-                'objectTypeID' => 'objectTypeID',
+        return $this->db->debug()->select(
+            'trackobjects',
+            [
+                '[>]objecttypes' => [
+                    'objectTypeID' => 'objectTypeID',
+                ],
             ],
-        ], [
-            'trackobjects.objectID',
-            'trackobjects.objectTypeID',
-            'trackobjects.objectRouteID',
-            'trackobjects.objectName',
-            'trackobjects.objectKilometer',
-            'css' => [
-                'objecttypes.objectTypeID',
-                'objecttypes.objectTypeCSS',
+            [
+                'trackobjects.objectID',
+                'trackobjects.objectTypeID',
+                'trackobjects.objectRouteID',
+                'trackobjects.objectName',
+                'trackobjects.objectKilometer',
+                'css' => [
+                    'objecttypes.objectTypeID',
+                    'objecttypes.objectTypeCSS',
 
+                ],
             ],
-        ], ['objectID' => $id]);
-
+            ['objectID' => $id]
+        );
     }
 
     /**

@@ -11,14 +11,14 @@
  * @author    Oskar Barcz <kontakt@archi-tektur.pl>
  * @copyright 2018 Oskar 'archi_tektur' Barcz
  * @license   MIT
- * @version   4.0.0
+ * @version   GIT: <git_id>
  * @link      https://github.com/archi-tektur/ArchFW/
  */
 
 return [
-    # Here enter database details, if you want to use our extention.
+    // Here enter database details, if you want to use our extention.
     'databaseType' => 'mysql',
-    'databaseName' => 'test',
+    'databaseName' => 'digitaleschiene',
     'server'       => 'localhost',
     'user'         => 'root',
     'password'     => '',

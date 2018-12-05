@@ -4,6 +4,7 @@ namespace DBLS\Model;
 
 use DBLS\Interfaces\ValidateInterface;
 use Exception;
+use function strlen;
 
 class NewCarrierData extends Data implements ValidateInterface
 {
@@ -16,11 +17,11 @@ class NewCarrierData extends Data implements ValidateInterface
     /**
      * NewCarrierData constructor assigns data to object fields
      *
-     * @param string $name new carrier name
+     * @param string $name    new carrier name
      * @param string $address new carrier adress
-     * @param int $nip new carrier government work id
-     * @param float $regon new carrier limitation id
-     * @param string $uic new carrier country
+     * @param int    $nip     new carrier government work id
+     * @param float  $regon   new carrier limitation id
+     * @param string $uic     new carrier country
      *
      * @throws \Exception when at least one data is not correct
      */
@@ -40,15 +41,17 @@ class NewCarrierData extends Data implements ValidateInterface
         // If carrier name exceeds 32 characters
         if (strlen($this->name) > 64) {
             throw new Exception('Carrier name too long', 100);
-        } else if (strlen($this->address) > 128) {
+        } elseif (strlen($this->address) > 128) {
             throw new Exception('Carrier adress too long', 101);
-        } else if (strlen($this->nip) !== 10) {
+        } elseif (strlen($this->nip) !== 10) {
             throw new Exception('NIP has not correct length', 102);
-        } else if (strlen($this->regon) !== 14) {
+        } elseif (strlen($this->regon) !== 14) {
             throw new Exception('REGON has not correct length', 103);
-        } else if (strlen($this->uic) !== 2) {
+        } elseif (strlen($this->uic) !== 2) {
             throw new Exception('UIC code has not correct length', 104);
-        } else return true;
+        } else {
+            return true;
+        }
     }
 
     /**

@@ -15,7 +15,8 @@ use DBLS\Model\RestorePasswordData;
 use Medoo\Medoo;
 
 /**
- * Instantiate this class to log user and manage them. Use static methods to recover access to an account or create
+ * Instantiate this class to log user and manage them.
+ * Use static methods to recover access to an account or create
  * new one.
  *
  * @package PasswordManager\Controller\Account
@@ -24,7 +25,8 @@ class User
 {
 
     /**
-     * @var string Holds user login from object given in constructor. Warning! Value is emptyied while succesful
+     * @var string Holds user login from object given in constructor.
+     * Warning! Value is emptyied while succesful
      * logging user!
      */
     protected $_userLogin;
@@ -71,12 +73,12 @@ class User
     /**
      * Registers user with RegisterData object. Before addition, checks if user does not exists in database actually
      *
-     * @param RegisterData $Data
+     * @param RegisterData $data
      * @return bool true if user were created, false if user existed with the same email or login
      */
-    public static function registerUser(RegisterData $Data): bool
+    public static function registerUser(RegisterData $data): bool
     {
-        if (self::_checkUserExist($Data->getLogin(), $Data->getEmail())) {
+        if (self::checkUserExist($data->getLogin(), $data->getEmail())) {
             return false;
         }
 
@@ -106,13 +108,13 @@ class User
      * @param $email
      * @return bool returns true when user exists, false if not
      */
-    protected static function _checkUserExist($login, $email): bool
+    protected static function checkUserExist($login, $email): bool
     {
         // creating database connector
-        $db = DatabaseFactory::getInstance();
+        $database = DatabaseFactory::getInstance();
 
         // query
-        $data = $db->select('accounts', [
+        $data = $database->select('accounts', [
             'accountID',
         ], [
             'OR' => [
@@ -122,16 +124,11 @@ class User
         ]);
 
         // empty array resolves to false
-        if ($data) {
-            return true;
-        } else {
-            return false;
-        }
+        return $data ? true : false;
     }
 
     public static function recoverPassword(RestorePasswordData $Password)
     {
-
     }
 
     /**
